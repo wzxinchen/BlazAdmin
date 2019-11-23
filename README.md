@@ -3,35 +3,24 @@
 #### 介绍
 基于Blazui的后台管理模板，无JS，无TS，非 Silverlight，非 WebForm，开箱即用
 
-#### 软件架构
-软件架构说明
+#### 使用前提
+参考Blazor使用的前提条件
+
+1. 安装 .Net Core 3.0
+2. 安装 VS2019
+3. 安装所有 VS2019 Blazor Extension
 
 
-#### 安装教程
+#### 计划特性
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  一个标签，进行一些设置，得到一个后台管理界面 :fa-spinner: 
+2.  标签页式设计，天然模块化设计
+3.  集成JWT认证、用户登录
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  暂无
 
-#### 参与贡献
+#### 关注与讨论
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 码云特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+加入QQ群：74522853
