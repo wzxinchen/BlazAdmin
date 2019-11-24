@@ -1,31 +1,4 @@
-﻿@inherits LayoutComponentBase
+﻿@inherits MainLayoutBase
 
-<BAdminTemplate Body="@Body" DefaultRoute="/guide/blazui">
-    <Menu Mode="@MenuMode.Vertical" DefaultActive="0">
-        <SubMenu Label="快速上手">
-            <MenuItem Route="/guide/blazui">Blazui</MenuItem>
-            <MenuItem Route="/guide/blazadmin">BlazAdmin</MenuItem>
-        </SubMenu>
-        <SubMenu Label="基础组件">
-            <MenuItem Route="button">Button 按钮</MenuItem>
-            <MenuItem Route="input">Input 输入框</MenuItem>
-            <MenuItem Route="radio">Radio 单选框</MenuItem>
-            <MenuItem Route="checkbox">Checkbox 多选框</MenuItem>
-            <MenuItem Route="switch">Switch</MenuItem>
-            <MenuItem Route="pagination">Pagination 分页</MenuItem>
-            <MenuItem Route="select">Select 选择器</MenuItem>
-            <MenuItem Route="radio">Radio 单选框</MenuItem>
-            <MenuItem Route="menu">NavMenu 导航菜单</MenuItem>
-            <MenuItem Route="tabs">Tabs 标签页</MenuItem>
-            <MenuItem Route="table">Table 表格</MenuItem>
-            <MenuItem Route="form">Form 表单</MenuItem>
-        </SubMenu>
-        <SubMenu Label="弹窗组件">
-            <MenuItem Route="message">Message 消息</MenuItem>
-            <MenuItem Route="loading">Loading 加载中</MenuItem>
-            <MenuItem Route="messagebox">MessageBox 消息弹窗</MenuItem>
-            <MenuItem Route="dialog">Dialog 对话框</MenuItem>
-            <MenuItem Route="datepicker">DatePicker 日期选择器</MenuItem>
-        </SubMenu>
-    </Menu>
+<BAdminTemplate Body="@Body" Menus="Menus">
 </BAdminTemplate>

@@ -1,14 +1,28 @@
 ﻿@inherits BAdminTemplateBase
-<div class="sidebar">
-    @ChildContent
+<div class="sidebar" style="width:220px;background-color:#20222A;border-right: solid 1px #e6e6e6;">
+    <div style="height:50px;vertical-align:middle;text-align:center;line-height:50px;color:rgba(255,255,255,.7);border-right: solid 1px #e6e6e6;">Blazui BlazAdmin 文档</div>
+    <Menu Mode="@MenuMode.Vertical" @bind-ActiveItem="CurrentMenu" DefaultActive="0" BackgroundColor="#20222A" ActiveTextColor="#FFFFFF" TextColor="rgba(255,255,255,.7)" HoverColor="#434A50">
+        @foreach (var menu in Menus)
+        {
+            if (menu.Children != null && menu.Children.Any())
+            {
+                <SubMenu Label="@menu.Label">
+                    @foreach (var children in menu.Children)
+                    {
+                        <MenuItem Route="@children.Route" Model="@children">@children.Label</MenuItem>
+                    }
+                </SubMenu>
+            }
+            else
+            {
+                <MenuItem Route="@menu.Route" Model="@menu">@menu.Label</MenuItem>
+            }
+        }
+    </Menu>
 </div>
 
 <div class="main">
-    <div class="top-row px-4">
-        <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">About</a>
-    </div>
-
-    <div class="content px-4">
-        @Body
-    </div>
+    <BTab Type="@TabType.Card" IsClosable="true" ActiveTabName="@ActiveTabName">
+        <BTabPanel DataSource="Tabs" Content="x=>x.Content" Title="x=>x.Title" Name="x=>x.Name"></BTabPanel>
+    </BTab>
 </div>

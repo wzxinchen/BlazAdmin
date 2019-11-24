@@ -1,0 +1,12 @@
+﻿body {
+    margin: 0;
+}
+
+    body app {
+        display: flex;
+        height: 100vh;
+    }
+
+        body app .main {
+            flex: 1;
+        }

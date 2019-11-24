@@ -14,6 +14,7 @@ namespace BlazAdmin
             services.AddServerSideBlazor();
             services.AddHttpClient();
             services.AddBlazuiServices();
+            services.AddSingleton<RouteService>();
             return services;
         }
     }
