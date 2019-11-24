@@ -1,7 +1,7 @@
 # BlazAdmin
 
 #### 介绍
-基于Blazui （[https://gitee.com/wzxinchen/blazui](http://)） 的后台管理模板，无JS，无TS，非 Silverlight，非 WebForm，开箱即用
+基于Blazui （[https://gitee.com/wzxinchen/blazui](https://gitee.com/wzxinchen/blazui)） 的后台管理模板，无JS，无TS，非 Silverlight，非 WebForm，开箱即用
 
 #### 使用前提
 参考Blazor使用的前提条件
