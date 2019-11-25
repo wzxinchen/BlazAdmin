@@ -13,8 +13,10 @@ namespace BlazAdmin
         [Inject]
         private RouteService routeService { get; set; }
 
+        protected string defaultMenuIndex;
         [Parameter]
         public List<MenuModel> Menus { get; set; }
+
         [Parameter]
         public RenderFragment ChildContent { get; set; }
         [Parameter]
@@ -33,17 +35,36 @@ namespace BlazAdmin
         NavigationManager NavigationManager { get; set; }
         protected override void OnInitialized()
         {
-            if (new Uri(NavigationManager.Uri).LocalPath == "/" && !string.IsNullOrWhiteSpace(DefaultRoute))
+            var path = new Uri(NavigationManager.Uri).LocalPath;
+            if (path == "/" && !string.IsNullOrWhiteSpace(DefaultRoute))
             {
                 NavigationManager.NavigateTo(DefaultRoute);
                 return;
             }
+
+            defaultMenuIndex = path;
+            FixMenuInfo(Menus);
             NavigationManager.LocationChanged += NavigationManager_LocationChanged;
+        }
+
+        void FixMenuInfo(List<MenuModel> menus)
+        {
+            foreach (var menu in menus)
+            {
+                menu.Name = menu.Name ?? menu.Route;
+                menu.Title = menu.Title ?? menu.Label;
+                FixMenuInfo(menu.Children);
+            }
         }
 
         private void NavigationManager_LocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
         {
             var path = new Uri(NavigationManager.Uri).LocalPath;
+            AddTab(path);
+        }
+
+        private void AddTab(string path)
+        {
             var type = routeService.GetComponent(path);
             var model = (MenuModel)CurrentMenu.Model;
             ActiveTabName = model.Name ?? model.Route;
@@ -58,7 +79,6 @@ namespace BlazAdmin
                 Name = ActiveTabName,
                 Content = type
             });
-            StateHasChanged();
         }
     }
 }
