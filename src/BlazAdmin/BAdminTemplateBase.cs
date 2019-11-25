@@ -14,6 +14,8 @@ namespace BlazAdmin
         private RouteService routeService { get; set; }
 
         protected string defaultMenuIndex;
+        private string defaultPath;
+
         [Parameter]
         public List<MenuModel> Menus { get; set; }
 
@@ -35,14 +37,14 @@ namespace BlazAdmin
         NavigationManager NavigationManager { get; set; }
         protected override void OnInitialized()
         {
-            var path = new Uri(NavigationManager.Uri).LocalPath;
-            if (path == "/" && !string.IsNullOrWhiteSpace(DefaultRoute))
+            defaultPath = new Uri(NavigationManager.Uri).LocalPath;
+            if (defaultPath == "/" && !string.IsNullOrWhiteSpace(DefaultRoute))
             {
                 NavigationManager.NavigateTo(DefaultRoute);
                 return;
             }
 
-            defaultMenuIndex = path;
+            defaultMenuIndex = defaultPath;
             FixMenuInfo(Menus);
             NavigationManager.LocationChanged += NavigationManager_LocationChanged;
         }
@@ -66,6 +68,10 @@ namespace BlazAdmin
         private void AddTab(string path)
         {
             var type = routeService.GetComponent(path);
+            if (type == null)
+            {
+                return;
+            }
             var model = (MenuModel)CurrentMenu.Model;
             ActiveTabName = model.Name ?? model.Route;
             if (Tabs.Any(x => x.Name == ActiveTabName))
@@ -79,6 +85,11 @@ namespace BlazAdmin
                 Name = ActiveTabName,
                 Content = type
             });
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            AddTab(defaultPath);
         }
     }
 }
