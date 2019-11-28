@@ -1,4 +1,5 @@
-﻿using Blazui.Component.EventArgs;
+﻿using Blazui.Component;
+using Blazui.Component.EventArgs;
 using Blazui.Component.NavMenu;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -14,7 +15,17 @@ namespace BlazAdmin
         [Inject]
         private RouteService routeService { get; set; }
 
+        [Inject]
+        private MessageService MessageService { get; set; }
+
         protected string defaultMenuIndex;
+
+        /// <summary>
+        /// 导航菜单栏标题
+        /// </summary>
+        [Parameter]
+        public string NavigationTitle { get; set; } = "BlazAdmin 后台模板";
+
         [Parameter]
         public List<MenuModel> Menus { get; set; }
 
@@ -34,6 +45,10 @@ namespace BlazAdmin
         /// 页面刚刚加载完成时自动加载选项卡的动作是否完成
         /// </summary>
         private bool isLoadRendered = false;
+
+        /// <summary>
+        /// 初始 Tab 集合
+        /// </summary>
         [Parameter]
         public ObservableCollection<TabModel> Tabs { get; set; } = new ObservableCollection<TabModel>();
         [Inject]
@@ -89,6 +104,10 @@ namespace BlazAdmin
             var type = routeService.GetComponent(path);
             if (type == null)
             {
+                if (path != "/")
+                {
+                    MessageService.Show($"路由为 {path} 的页面未找到", MessageType.Warning);
+                }
                 return;
             }
             ActiveTabName = path;

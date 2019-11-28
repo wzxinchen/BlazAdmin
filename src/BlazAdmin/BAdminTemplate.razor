@@ -1,6 +1,7 @@
 ﻿@inherits BAdminTemplateBase
+<BPopup></BPopup>
 <div class="sidebar" style="width:220px;background-color:#20222A;border-right: solid 1px #e6e6e6;">
-    <div style="height:50px;vertical-align:middle;text-align:center;line-height:50px;color:rgba(255,255,255,.7);border-right: solid 1px #e6e6e6;">Blazui BlazAdmin 文档</div>
+    <div style="height:50px;vertical-align:middle;text-align:center;line-height:50px;color:rgba(255,255,255,.7);border-right: solid 1px #e6e6e6;">@NavigationTitle</div>
     <BMenu Mode="@MenuMode.Vertical" @bind-ActiveItem="@CurrentMenu" DefaultActive="@defaultMenuIndex" BackgroundColor="#20222A" ActiveTextColor="#FFFFFF" TextColor="rgba(255,255,255,.7)" HoverColor="#434A50">
         @foreach (var menu in Menus)
         {

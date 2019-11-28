@@ -13,7 +13,7 @@ namespace BlazAdmin
         {
             var pageTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.DefinedTypes)
-                .Where(x => typeof(BAdminPageBase).IsAssignableFrom(x))
+                .Where(x => typeof(ComponentBase).IsAssignableFrom(x))
                 .ToList();
             var pageTemplates = pageTypes.Select(x => new
             {
