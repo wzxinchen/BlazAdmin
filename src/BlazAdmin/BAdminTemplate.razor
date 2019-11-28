@@ -9,13 +9,13 @@
                 <BSubMenu Label="@menu.Label">
                     @foreach (var children in menu.Children)
                     {
-                        <BMenuItem Route="@children.Route" Index="@children.Name" Model="@children">@children.Label</BMenuItem>
+                        <BMenuItem Route="@children.Route" OnRouteChanging="OnRouteChanging" Index="@children.Name" Model="@children">@children.Label</BMenuItem>
                     }
                 </BSubMenu>
             }
             else
             {
-                <BMenuItem Route="@menu.Route" Index="@menu.Name" Model="@menu">@menu.Label</BMenuItem>
+                <BMenuItem Route="@menu.Route" OnRouteChanging="OnRouteChanging" Index="@menu.Name" Model="@menu">@menu.Label</BMenuItem>
             }
         }
     </BMenu>

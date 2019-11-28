@@ -1,4 +1,5 @@
-﻿using Blazui.Component.NavMenu;
+﻿using Blazui.Component.EventArgs;
+using Blazui.Component.NavMenu;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,10 @@ namespace BlazAdmin
 
         protected IMenuItem CurrentMenu { get; set; }
 
+        /// <summary>
+        /// 页面刚刚加载完成时自动加载选项卡的动作是否完成
+        /// </summary>
+        private bool isLoadRendered = false;
         [Parameter]
         public ObservableCollection<TabModel> Tabs { get; set; } = new ObservableCollection<TabModel>();
         [Inject]
@@ -44,7 +49,8 @@ namespace BlazAdmin
 
             defaultMenuIndex = path;
             FixMenuInfo(Menus);
-            NavigationManager.LocationChanged += NavigationManager_LocationChanged;
+            //NavigationManager.LocationChanged -= NavigationManager_LocationChanged;
+            //NavigationManager.LocationChanged += NavigationManager_LocationChanged;
         }
 
         void FixMenuInfo(List<MenuModel> menus)
@@ -57,28 +63,46 @@ namespace BlazAdmin
             }
         }
 
-        private void NavigationManager_LocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+        //private void NavigationManager_LocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+        //{
+        //    var path = new Uri(NavigationManager.Uri).LocalPath;
+        //    AddTab(path);
+        //}
+
+        protected override void OnAfterRender(bool firstRender)
         {
-            var path = new Uri(NavigationManager.Uri).LocalPath;
-            AddTab(path);
+            if (!isLoadRendered)
+            {
+                isLoadRendered = true;
+                AddTab(defaultMenuIndex);
+            }
+        }
+
+        protected void OnRouteChanging(BChangeEventArgs<string> arg)
+        {
+            arg.DisallowChange = true;
+            AddTab(arg.NewValue);
         }
 
         private void AddTab(string path)
         {
             var type = routeService.GetComponent(path);
-            var model = (MenuModel)CurrentMenu.Model;
-            ActiveTabName = model.Name ?? model.Route;
-            if (Tabs.Any(x => x.Name == ActiveTabName))
+            if (type == null)
             {
-                StateHasChanged();
                 return;
             }
-            Tabs.Add(new TabModel()
+            ActiveTabName = path;
+            if (!Tabs.Any(x => x.Name == ActiveTabName))
             {
-                Title = model.Title ?? model.Label,
-                Name = ActiveTabName,
-                Content = type
-            });
+                var model = (MenuModel)CurrentMenu.Model;
+                Tabs.Add(new TabModel()
+                {
+                    Title = model.Title ?? model.Label,
+                    Name = ActiveTabName,
+                    Content = type
+                });
+            }
+            StateHasChanged();
         }
     }
 }
