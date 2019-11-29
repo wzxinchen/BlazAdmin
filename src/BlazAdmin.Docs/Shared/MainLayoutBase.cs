@@ -77,6 +77,10 @@ namespace BlazAdmin.Docs.Shared
                      new MenuModel(){
                    Label="DatePicker 日期选择器",
                    Route="/datepicker"
+                  },
+                     new MenuModel(){
+                   Label="Layout 布局组件",
+                   Route="/layout"
                   }
                  }
             });

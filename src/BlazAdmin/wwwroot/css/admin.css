@@ -7,6 +7,15 @@
         height: 100vh;
     }
 
-        body app .main {
-            flex: 1;
-        }
+.blaz-layout-west .el-card {
+    border: none;
+    border-radius: 0;
+}
+
+.blaz-layout-west .el-card__header {
+    color: rgba(255,255,255,.7);
+    border: none;
+}
+.blaz-layout-west .el-card__body .el-menu {
+    border: none;
+}

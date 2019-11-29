@@ -31,7 +31,7 @@ namespace BlazAdmin.Docs.Pages
                 var razorPath = Path.Combine(location, item.Name + ".razor");
                 var demoModel = new DemoModel()
                 {
-                    Type = "Blazui.ServerRender.Demo." + item.Name,
+                    Type = "BlazAdmin.Docs.Demo." + item.Name,
                     Title = item.Title
                 };
                 if (System.IO.File.Exists(razorPath))
