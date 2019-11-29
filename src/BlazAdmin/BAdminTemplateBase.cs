@@ -64,8 +64,6 @@ namespace BlazAdmin
 
             defaultMenuIndex = path;
             FixMenuInfo(Menus);
-            //NavigationManager.LocationChanged -= NavigationManager_LocationChanged;
-            //NavigationManager.LocationChanged += NavigationManager_LocationChanged;
         }
 
         void FixMenuInfo(List<MenuModel> menus)
@@ -77,12 +75,6 @@ namespace BlazAdmin
                 FixMenuInfo(menu.Children);
             }
         }
-
-        //private void NavigationManager_LocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
-        //{
-        //    var path = new Uri(NavigationManager.Uri).LocalPath;
-        //    AddTab(path);
-        //}
 
         protected override void OnAfterRender(bool firstRender)
         {
