@@ -8,6 +8,11 @@ namespace BlazAdmin.Docs.Shared
 {
     public class MainLayoutBase : LayoutComponentBase
     {
+        protected LoginModel DefaultUser { get; set; } = new LoginModel()
+        {
+            Username = "admin",
+            Password = "admin"
+        };
         protected List<MenuModel> Menus { get; set; } = new List<MenuModel>();
 
         protected override void OnInitialized()

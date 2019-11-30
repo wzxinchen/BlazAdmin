@@ -15,11 +15,19 @@ namespace BlazAdmin
         [Inject]
         private RouteService routeService { get; set; }
 
+        protected bool isLogined = false;
         [Inject]
         private MessageService MessageService { get; set; }
 
         protected string defaultMenuIndex;
 
+        [Parameter]
+        public LoginModel DefaultUser { get; set; } 
+
+        [Parameter]
+        public RenderFragment LoginPage { get; set; }
+        [Parameter]
+        public float NavigationWidth { get; set; } = 250;
         /// <summary>
         /// 导航菜单栏标题
         /// </summary>
