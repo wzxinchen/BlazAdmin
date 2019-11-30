@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BlazAdmin
 {
-    public class BAdminTemplateBase : ComponentBase
+    public class BAdminTemplateBase : BComponentBase
     {
         [Inject]
         private RouteService routeService { get; set; }
@@ -22,6 +22,9 @@ namespace BlazAdmin
 
         [Inject]
         private MessageBox MessageBox { get; set; }
+
+        [Inject]
+        private DialogService DialogService { get; set; }
         protected string defaultMenuIndex;
 
         [Parameter]
@@ -57,9 +60,10 @@ namespace BlazAdmin
         /// </summary>
         private bool isLoadRendered = false;
 
-        internal void ModifyPassword()
+        internal async Task ModifyPasswordAsync()
         {
-
+            var result = await DialogService.ShowDialogAsync<BModifyPassword, ModifyPasswordModel>("修改密码", 500);
+            Alert(result.Result.NewPassword);
         }
 
         internal async System.Threading.Tasks.Task LogoutAsync()
