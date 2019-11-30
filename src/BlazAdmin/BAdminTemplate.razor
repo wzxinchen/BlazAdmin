@@ -37,6 +37,22 @@ else
             </BSimpleCard>
         </West>
         <Center>
+            <div class="navbar">
+                <div class="fill"></div>
+                <div class="tools">
+                    <BDropDown Style="cursor:pointer;">
+                        <Trigger>
+                            <span class="el-dropdown-link">
+                                @DefaultUser?.Username<i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                        </Trigger>
+                        <Items>
+                            <BDropDownItem OnClick="ModifyPassword">修改密码</BDropDownItem>
+                            <BDropDownItem OnClick="LogoutAsync">注销登录</BDropDownItem>
+                        </Items>
+                    </BDropDown>
+                </div>
+            </div>
             <BTab Type="@TabType.Card" IsClosable="true" ActiveTabName="@ActiveTabName">
                 <BTabPanel DataSource="Tabs" Content="x => x.Content" Title="x => x.Title" Name="x => x.Name"></BTabPanel>
             </BTab>

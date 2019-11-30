@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BlazAdmin
 {
@@ -15,14 +16,16 @@ namespace BlazAdmin
         [Inject]
         private RouteService routeService { get; set; }
 
-        protected bool isLogined = false;
+        protected bool isLogined = true;
         [Inject]
         private MessageService MessageService { get; set; }
 
+        [Inject]
+        private MessageBox MessageBox { get; set; }
         protected string defaultMenuIndex;
 
         [Parameter]
-        public LoginModel DefaultUser { get; set; } 
+        public LoginModel DefaultUser { get; set; }
 
         [Parameter]
         public RenderFragment LoginPage { get; set; }
@@ -54,6 +57,20 @@ namespace BlazAdmin
         /// </summary>
         private bool isLoadRendered = false;
 
+        internal void ModifyPassword()
+        {
+
+        }
+
+        internal async System.Threading.Tasks.Task LogoutAsync()
+        {
+            var result = await MessageBox.ConfirmAsync("是否确认注销登录？");
+            if (result != MessageBoxResult.Ok)
+            {
+                return;
+            }
+            await MessageBox.AlertAsync("已注销登录");
+        }
         /// <summary>
         /// 初始 Tab 集合
         /// </summary>
