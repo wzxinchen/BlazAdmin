@@ -1,4 +1,5 @@
-﻿using Blazui.Component;
+﻿using BlazAdmin.Core.Abstract;
+using Blazui.Component;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -7,25 +8,23 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazAdmin
+namespace BlazAdmin.Core
 {
     public class BAdminPageBase : BComponentBase
     {
         [Inject]
-        public SignInManager<IdentityUser> SignInManager { get; set; }
+        public IUserService UserService { get; set; }
 
-        public IdentityUser User { get; private set; }
-
+        public string Username { get; private set; }
         [Inject]
         public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
-        [Inject]
-        protected NavigationManager NavigationManager { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             base.OnInitialized();
-            var username = await GetUsernameAsync();
-            User = await SignInManager.UserManager.FindByNameAsync(username);
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            Username = user.Identity.Name;
         }
         public async System.Threading.Tasks.Task<string> GetUsernameAsync()
         {

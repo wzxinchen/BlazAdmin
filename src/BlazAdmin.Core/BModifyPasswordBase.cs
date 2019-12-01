@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazAdmin
+namespace BlazAdmin.Core
 {
     public class BModifyPasswordBase : BAdminPageBase
     {
@@ -24,19 +24,10 @@ namespace BlazAdmin
 
             var info = form.GetValue<ModifyPasswordModel>();
 
-            var result = await SignInManager.UserManager.ChangePasswordAsync(User, info.OldPassword, info.NewPassword);
-            if (!result.Succeeded)
+            var result = await UserService.ChangePasswordAsync(Username, info.OldPassword, info.NewPassword);
+            if (!string.IsNullOrWhiteSpace(result))
             {
-                foreach (var item in result.Errors)
-                {
-                    if (item.Code == "PasswordMismatch")
-                    {
-                        Toast("旧密码错误");
-                        return;
-                    }
-                    Toast(item.Description);
-                    return;
-                }
+                Toast(result);
                 return;
             }
             _ = DialogService.CloseDialogAsync(this, info);

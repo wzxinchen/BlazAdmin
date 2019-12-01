@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BlazAdmin.Model
+namespace BlazAdmin.Core.Model
 {
     public class UserModel
     {

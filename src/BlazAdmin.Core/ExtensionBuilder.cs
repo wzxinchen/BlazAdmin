@@ -7,13 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BlazAdmin
+namespace BlazAdmin.Core
 {
     public static class ExtensionBuilder
     {
-        public static IServiceCollection AddBlazAdminServices(this IServiceCollection services)
+        public static IServiceCollection AddBlazAdminCoreServices(this IServiceCollection services)
         {
-            services.AddMvcCore().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddHttpClient();

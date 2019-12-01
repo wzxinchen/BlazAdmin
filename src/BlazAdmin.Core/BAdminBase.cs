@@ -1,4 +1,5 @@
-﻿using Blazui.Component;
+﻿using BlazAdmin.Core;
+using Blazui.Component;
 using Blazui.Component.Container;
 using Blazui.Component.EventArgs;
 using Blazui.Component.Form;
@@ -13,9 +14,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazAdmin
+namespace BlazAdmin.Core
 {
-    public class BAdminTemplateBase : BComponentBase
+    public class BAdminBase : BComponentBase
     {
         [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
@@ -25,8 +26,6 @@ namespace BlazAdmin
         protected BForm form;
         [Inject]
         private MessageService MessageService { get; set; }
-        [Inject]
-        SignInManager<IdentityUser> SignInManager { get; set; }
 
         [Inject]
         private MessageBox MessageBox { get; set; }

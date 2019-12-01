@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazAdmin.Controllers
+namespace BlazAdmin.Core.Controllers
 {
     public class AccountController : ControllerBase
     {

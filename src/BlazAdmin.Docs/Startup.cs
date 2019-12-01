@@ -13,6 +13,8 @@ using BlazAdmin.Docs.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using BlazAdmin.Core;
+using BlazAdmin.Authentication.Identity;
 
 namespace BlazAdmin.Docs
 {
@@ -29,33 +31,10 @@ namespace BlazAdmin.Docs
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddBlazAdminServices();
+            services.AddBlazAdminServices<IdentityUser, DocsDbContext>();
             services.AddDbContext<DocsDbContext>(options =>
             {
                 options.UseInMemoryDatabase("docs");
-            });
-            services.AddAuthentication(o =>
-            {
-                o.DefaultScheme = IdentityConstants.ApplicationScheme;
-                o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-            })
-            .AddIdentityCookies();
-            services.AddIdentityCore<IdentityUser>(o =>
-            {
-                o.Stores.MaxLengthForKeys = 128;
-            }).AddRoles<IdentityRole>()
-            .AddSignInManager()
-            .AddDefaultTokenProviders()
-            .AddEntityFrameworkStores<DocsDbContext>(); 
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Default Password settings.
-                options.Password.RequireDigit = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 6;
-                options.Password.RequiredUniqueChars = 1;
             });
             services.AddSingleton<WeatherForecastService>();
         }
