@@ -71,7 +71,11 @@ namespace BlazAdmin
         internal async Task ModifyPasswordAsync()
         {
             var result = await DialogService.ShowDialogAsync<BModifyPassword, ModifyPasswordModel>("修改密码", 500);
-            Alert(result.Result.NewPassword);
+            if (result.Result == null)
+            {
+                return;
+            }
+            await form.SubmitAsync("/account/logout");
         }
 
         internal async System.Threading.Tasks.Task LogoutAsync()

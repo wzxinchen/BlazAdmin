@@ -45,6 +45,7 @@ namespace BlazAdmin.Docs
                 o.Stores.MaxLengthForKeys = 128;
             }).AddRoles<IdentityRole>()
             .AddSignInManager()
+            .AddDefaultTokenProviders()
             .AddEntityFrameworkStores<DocsDbContext>(); 
             services.Configure<IdentityOptions>(options =>
             {
