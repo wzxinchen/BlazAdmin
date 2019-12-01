@@ -2,6 +2,7 @@
 using Blazui.Component.EventArgs;
 using Blazui.Component.NavMenu;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,22 +15,22 @@ namespace BlazAdmin
     public class BAdminTemplateBase : BComponentBase
     {
         [Inject]
+        private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [Inject]
         private RouteService routeService { get; set; }
 
-        protected bool isLogined = true;
         [Inject]
         private MessageService MessageService { get; set; }
 
         [Inject]
         private MessageBox MessageBox { get; set; }
 
-        [Inject]
-        private DialogService DialogService { get; set; }
         protected string defaultMenuIndex;
 
         [Parameter]
-        public LoginModel DefaultUser { get; set; }
+        public LoginInfoModel DefaultUser { get; set; }
 
+        protected string username;
         [Parameter]
         public RenderFragment LoginPage { get; set; }
         [Parameter]
@@ -82,7 +83,7 @@ namespace BlazAdmin
         public ObservableCollection<TabModel> Tabs { get; set; } = new ObservableCollection<TabModel>();
         [Inject]
         NavigationManager NavigationManager { get; set; }
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             var path = new Uri(NavigationManager.Uri).LocalPath;
             if (path == "/" && !string.IsNullOrWhiteSpace(DefaultRoute))
@@ -93,6 +94,9 @@ namespace BlazAdmin
 
             defaultMenuIndex = path;
             FixMenuInfo(Menus);
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            username = user.Identity.Name;
         }
 
         void FixMenuInfo(List<MenuModel> menus)
@@ -105,6 +109,10 @@ namespace BlazAdmin
             }
         }
 
+        internal void Refresh()
+        {
+            StateHasChanged();
+        }
         protected override void OnAfterRender(bool firstRender)
         {
             if (!isLoadRendered)

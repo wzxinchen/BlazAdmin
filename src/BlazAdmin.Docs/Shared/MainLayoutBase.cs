@@ -8,7 +8,7 @@ namespace BlazAdmin.Docs.Shared
 {
     public class MainLayoutBase : LayoutComponentBase
     {
-        protected LoginModel DefaultUser { get; set; } = new LoginModel()
+        protected LoginInfoModel DefaultUser { get; set; } = new LoginInfoModel()
         {
             Username = "admin",
             Password = "admin"

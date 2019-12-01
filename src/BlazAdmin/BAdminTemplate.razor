@@ -1,61 +1,69 @@
 ﻿@inherits BAdminTemplateBase
 <BPopup></BPopup>
-@if (!isLogined)
-{
-    if (LoginPage != null)
-    {
-        @LoginPage
-    }
-    else
-    {
-        <BLogin DefaultUser="DefaultUser"></BLogin>
-    }
-}
-else
-{
-    <BLayout WestWidth="@NavigationWidth">
-        <West>
-            <BSimpleCard Title="@NavigationTitle" Style="background-color:#20222A;" Shadow="@ShadowShowType.Never">
-                <BMenu Mode="@MenuMode.Vertical" @bind-ActiveItem="@CurrentMenu" DefaultActive="@defaultMenuIndex" BackgroundColor="#20222A" ActiveTextColor="#FFFFFF" TextColor="rgba(255,255,255,.7)" HoverColor="#434A50">
-                    @foreach (var menu in Menus)
-                    {
-                        if (menu.Children != null && menu.Children.Any())
-                        {
-                            <BSubMenu Label="@menu.Label">
-                                @foreach (var children in menu.Children)
+<CascadingAuthenticationState>
+    <CascadingValue Value="this">
+        <AuthorizeView>
+            <Authorized>
+                <BLayout WestWidth="@NavigationWidth">
+                    <West>
+                        <BSimpleCard Title="@NavigationTitle" Style="background-color:#20222A;" Shadow="@ShadowShowType.Never">
+                            <BMenu Mode="@MenuMode.Vertical" @bind-ActiveItem="@CurrentMenu" DefaultActive="@defaultMenuIndex" BackgroundColor="#20222A" ActiveTextColor="#FFFFFF" TextColor="rgba(255,255,255,.7)" HoverColor="#434A50">
+                                @foreach (var menu in Menus)
                                 {
-                                    <BMenuItem Route="@children.Route" OnRouteChanging="OnRouteChanging" Index="@children.Name" Model="@children">@children.Label</BMenuItem>
+                                    if (menu.Children != null && menu.Children.Any())
+                                    {
+                                        <BSubMenu Label="@menu.Label">
+                                            @foreach (var children in menu.Children)
+                                            {
+                                                <BMenuItem Route="@children.Route" OnRouteChanging="OnRouteChanging" Index="@children.Name" Model="@children">@children.Label</BMenuItem>
+                                            }
+                                        </BSubMenu>
+                                    }
+                                    else
+                                    {
+                                        <BMenuItem Route="@menu.Route" OnRouteChanging="OnRouteChanging" Index="@menu.Name" Model="@menu">@menu.Label</BMenuItem>
+                                    }
                                 }
-                            </BSubMenu>
-                        }
-                        else
-                        {
-                            <BMenuItem Route="@menu.Route" OnRouteChanging="OnRouteChanging" Index="@menu.Name" Model="@menu">@menu.Label</BMenuItem>
-                        }
+                            </BMenu>
+                        </BSimpleCard>
+                    </West>
+                    <Center>
+                        <div class="navbar">
+                            <div class="fill"></div>
+                            <div class="tools">
+
+                                <BDropDown Style="cursor:pointer;">
+                                    <Trigger>
+                                        <span class="el-dropdown-link">
+                                            @username  <i class="el-icon-arrow-down el-icon--right"></i>
+                                        </span>
+                                    </Trigger>
+                                    <Items>
+                                        <BDropDownItem OnClick="ModifyPasswordAsync">修改密码</BDropDownItem>
+                                        <BDropDownItem OnClick="LogoutAsync">注销登录</BDropDownItem>
+                                    </Items>
+                                </BDropDown>
+                            </div>
+                        </div>
+                        <BTab Type="@TabType.Card" IsClosable="true" ActiveTabName="@ActiveTabName">
+                            <BTabPanel DataSource="Tabs" Content="x => x.Content" Title="x => x.Title" Name="x => x.Name"></BTabPanel>
+                        </BTab>
+                    </Center>
+                </BLayout>
+            </Authorized>
+            <NotAuthorized>
+
+                @{
+                    if (LoginPage != null)
+                    {
+                        @LoginPage
                     }
-                </BMenu>
-            </BSimpleCard>
-        </West>
-        <Center>
-            <div class="navbar">
-                <div class="fill"></div>
-                <div class="tools">
-                    <BDropDown Style="cursor:pointer;">
-                        <Trigger>
-                            <span class="el-dropdown-link">
-                                @DefaultUser?.Username<i class="el-icon-arrow-down el-icon--right"></i>
-                            </span>
-                        </Trigger>
-                        <Items>
-                            <BDropDownItem OnClick="ModifyPasswordAsync">修改密码</BDropDownItem>
-                            <BDropDownItem OnClick="LogoutAsync">注销登录</BDropDownItem>
-                        </Items>
-                    </BDropDown>
-                </div>
-            </div>
-            <BTab Type="@TabType.Card" IsClosable="true" ActiveTabName="@ActiveTabName">
-                <BTabPanel DataSource="Tabs" Content="x => x.Content" Title="x => x.Title" Name="x => x.Name"></BTabPanel>
-            </BTab>
-        </Center>
-    </BLayout>
-}
+                    else
+                    {
+                        <BLogin DefaultUser="DefaultUser"></BLogin>
+                    }
+                }
+            </NotAuthorized>
+        </AuthorizeView>
+    </CascadingValue>
+</CascadingAuthenticationState>
