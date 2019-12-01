@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BlazAdmin.Docs.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace BlazAdmin.Docs
 {
@@ -27,6 +30,33 @@ namespace BlazAdmin.Docs
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddBlazAdminServices();
+            services.AddDbContext<DocsDbContext>(options =>
+            {
+                options.UseInMemoryDatabase("docs");
+            });
+            services.AddAuthentication(o =>
+            {
+                o.DefaultScheme = IdentityConstants.ApplicationScheme;
+                o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+            })
+            .AddIdentityCookies();
+            services.AddIdentityCore<IdentityUser>(o =>
+            {
+                o.Stores.MaxLengthForKeys = 128;
+            }).AddRoles<IdentityRole>()
+            .AddSignInManager()
+            .AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<DocsDbContext>(); 
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Default Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+            });
             services.AddSingleton<WeatherForecastService>();
         }
 
@@ -46,11 +76,13 @@ namespace BlazAdmin.Docs
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });

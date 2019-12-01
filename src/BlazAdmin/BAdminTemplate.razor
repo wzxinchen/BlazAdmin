@@ -1,28 +1,60 @@
 ﻿@inherits BAdminTemplateBase
-<div class="sidebar" style="width:220px;background-color:#20222A;border-right: solid 1px #e6e6e6;">
-    <div style="height:50px;vertical-align:middle;text-align:center;line-height:50px;color:rgba(255,255,255,.7);border-right: solid 1px #e6e6e6;">Blazui BlazAdmin 文档</div>
-    <BMenu Mode="@MenuMode.Vertical" @bind-ActiveItem="@CurrentMenu" DefaultActive="@defaultMenuIndex" BackgroundColor="#20222A" ActiveTextColor="#FFFFFF" TextColor="rgba(255,255,255,.7)" HoverColor="#434A50">
-        @foreach (var menu in Menus)
-        {
-            if (menu.Children != null && menu.Children.Any())
-            {
-                <BSubMenu Label="@menu.Label">
-                    @foreach (var children in menu.Children)
-                    {
-                        <BMenuItem Route="@children.Route" OnRouteChanging="OnRouteChanging" Index="@children.Name" Model="@children">@children.Label</BMenuItem>
-                    }
-                </BSubMenu>
-            }
-            else
-            {
-                <BMenuItem Route="@menu.Route" OnRouteChanging="OnRouteChanging" Index="@menu.Name" Model="@menu">@menu.Label</BMenuItem>
-            }
-        }
-    </BMenu>
-</div>
+<BPopup></BPopup>
+<CascadingAuthenticationState>
+    <CascadingValue Value="this">
+        <AuthorizeView>
+            <Authorized>
+                <BLayout WestWidth="@NavigationWidth">
+                    <West>
+                        <BSimpleCard Title="@NavigationTitle" Style="background-color:#20222A;" Shadow="@ShadowShowType.Never">
+                            <BMenu Mode="@MenuMode.Vertical" @bind-ActiveItem="@CurrentMenu" DefaultActive="@defaultMenuIndex" BackgroundColor="#20222A" ActiveTextColor="#FFFFFF" TextColor="rgba(255,255,255,.7)" HoverColor="#434A50">
+                                @foreach (var menu in Menus)
+                                {
+                                    if (menu.Children != null && menu.Children.Any())
+                                    {
+                                        <BSubMenu Label="@menu.Label">
+                                            @foreach (var children in menu.Children)
+                                            {
+                                                <BMenuItem Route="@children.Route" OnRouteChanging="OnRouteChanging" Index="@children.Name" Model="@children">@children.Label</BMenuItem>
+                                            }
+                                        </BSubMenu>
+                                    }
+                                    else
+                                    {
+                                        <BMenuItem Route="@menu.Route" OnRouteChanging="OnRouteChanging" Index="@menu.Name" Model="@menu">@menu.Label</BMenuItem>
+                                    }
+                                }
+                            </BMenu>
+                        </BSimpleCard>
+                    </West>
+                    <Center>
+                        <BForm @ref="form"></BForm>
+                        <div class="navbar">
+                            <div class="fill"></div>
+                            <div class="tools">
 
-<div class="main">
-    <BTab Type="@TabType.Card" IsClosable="true" ActiveTabName="@ActiveTabName">
-        <BTabPanel DataSource="Tabs" Content="x=>x.Content" Title="x=>x.Title" Name="x=>x.Name"></BTabPanel>
-    </BTab>
-</div>
+                                <BDropDown Style="cursor:pointer;">
+                                    <Trigger>
+                                        <span class="el-dropdown-link">
+                                            @username  <i class="el-icon-arrow-down el-icon--right"></i>
+                                        </span>
+                                    </Trigger>
+                                    <Items>
+                                        <BDropDownItem OnClick="ModifyPasswordAsync">修改密码</BDropDownItem>
+                                        <BDropDownItem OnClick="LogoutAsync">注销登录</BDropDownItem>
+                                    </Items>
+                                </BDropDown>
+                            </div>
+                        </div>
+                        <BTab Type="@TabType.Card" IsClosable="true" ActiveTabName="@ActiveTabName">
+                            <BTabPanel DataSource="Tabs" Content="x => x.Content" Title="x => x.Title" Name="x => x.Name"></BTabPanel>
+                        </BTab>
+                    </Center>
+                </BLayout>
+            </Authorized>
+            <NotAuthorized>
+                <BNotAuthorized LoginPage="LoginPage" CreatePage="CreatePage"></BNotAuthorized>
+            </NotAuthorized>
+        </AuthorizeView>
+    </CascadingValue>
+</CascadingAuthenticationState>

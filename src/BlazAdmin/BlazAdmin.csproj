@@ -13,9 +13,5 @@
     <ProjectReference Include="..\..\..\blazui\src\Blazui.Component\Blazui.Component.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\" />
-  </ItemGroup>
-
 
 </Project>

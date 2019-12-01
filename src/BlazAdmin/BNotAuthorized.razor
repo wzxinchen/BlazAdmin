@@ -1,0 +1,32 @@
+﻿@inject UserManager<IdentityUser> userManager
+@using Microsoft.AspNetCore.Identity
+
+@if (userManager.Users.Any())
+{
+    if (LoginPage != null)
+    {
+        @((RenderFragment)LoginPage)
+    }
+    else
+    {
+        <BLogin></BLogin>
+    }
+}
+else
+{
+    if (CreatePage != null)
+    {
+        @((RenderFragment)CreatePage)
+    }
+    else
+    {
+        <BCreateSuperUser></BCreateSuperUser>
+    }
+}
+
+@code{
+    [Parameter]
+    public object LoginPage { get; set; }
+    [Parameter]
+    public object CreatePage { get; set; }
+}

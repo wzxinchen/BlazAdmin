@@ -9,7 +9,7 @@ namespace BlazAdmin.Docs.Demo.Form
 {
     public class BasicFormBase : ComponentBase
     {
-        internal LabelAlign formAlign;
+        internal LabelAlign formAlign= LabelAlign.Left;
         [Inject]
         Blazui.Component.MessageBox MessageBox { get; set; }
 

@@ -8,6 +8,11 @@ namespace BlazAdmin.Docs.Shared
 {
     public class MainLayoutBase : LayoutComponentBase
     {
+        protected LoginInfoModel DefaultUser { get; set; } = new LoginInfoModel()
+        {
+            Username = "admin",
+            Password = "admin"
+        };
         protected List<MenuModel> Menus { get; set; } = new List<MenuModel>();
 
         protected override void OnInitialized()
@@ -32,51 +37,55 @@ namespace BlazAdmin.Docs.Shared
                 Children = new List<MenuModel>() {
                   new MenuModel(){
                    Label="Button 按钮",
-                   Route="/docs/button"
+                   Route="/button"
                   },
                      new MenuModel(){
                    Label="Input 输入框",
-                   Route="/docs/input"
+                   Route="/input"
                   },
                      new MenuModel(){
                    Label="Radio 单选框",
-                   Route="/docs/radio"
+                   Route="/radio"
                   },
                      new MenuModel(){
                    Label="Checkbox 多选框",
-                   Route="/docs/checkbox"
+                   Route="/checkbox"
                   },
                      new MenuModel(){
                    Label="Switch",
-                   Route="/docs/switch"
+                   Route="/switch"
                   },
                      new MenuModel(){
                    Label="Select 选择器",
-                   Route="/docs/select"
+                   Route="/select"
                   },
                      new MenuModel(){
                    Label="NavMenu 导航菜单",
-                   Route="/docs/menu"
+                   Route="/menu"
                   },
                      new MenuModel(){
                    Label="Pagination 分页",
-                   Route="/docs/pagination"
+                   Route="/pagination"
                   },
                      new MenuModel(){
                    Label="Tabs 标签页",
-                   Route="/docs/tabs"
+                   Route="/tabs"
                   },
                      new MenuModel(){
                    Label="Table 表格",
-                   Route="/docs/table"
+                   Route="/table"
                   },
                      new MenuModel(){
                    Label="Form 表单",
-                   Route="/docs/form"
+                   Route="/form"
                   },
                      new MenuModel(){
                    Label="DatePicker 日期选择器",
-                   Route="/docs/datepicker"
+                   Route="/datepicker"
+                  },
+                     new MenuModel(){
+                   Label="Layout 布局组件",
+                   Route="/layout"
                   }
                  }
             });
@@ -86,19 +95,19 @@ namespace BlazAdmin.Docs.Shared
                 Children = new List<MenuModel>() {
                   new MenuModel(){
                    Label="Message 消息",
-                   Route="/docs/message"
+                   Route="/message"
                   },
                      new MenuModel(){
                    Label="Loading 加载中",
-                   Route="/docs/loading"
+                   Route="/loading"
                   },
                      new MenuModel(){
                    Label="MessageBox 消息弹窗",
-                   Route="/docs/messagebox"
+                   Route="/messagebox"
                   },
                      new MenuModel(){
                    Label="Dialog 对话框",
-                   Route="/docs/dialog"
+                   Route="/dialog"
                   }
                  }
             });
