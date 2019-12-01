@@ -1,1 +1,13 @@
 ﻿@page "/user/list"
+@using BlazAdmin.Model
+<BButtonGroup>
+    <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Medium">创建用户</BButton>
+    <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Medium">批量删除</BButton>
+</BButtonGroup>
+<BTable TRow="UserModel">
+    <BTableColumns TRow="UserModel">
+        <BTableCheckBoxColumn TRow="UserModel"></BTableCheckBoxColumn>
+        <BTableColumn TRow="UserModel" Width="300" Text="用户名" Property="x=>x.Username"></BTableColumn>
+        <BTableDateTimeColumn TRow="UserModel" Width="200" Text="创建日期" Property="x=>x.CreationTime"></BTableDateTimeColumn>
+    </BTableColumns>
+</BTable>

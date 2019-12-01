@@ -111,7 +111,6 @@ namespace BlazAdmin
                 return;
             }
 
-            defaultMenuIndex = path;
             FixMenuInfo(Menus);
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
@@ -151,12 +150,26 @@ namespace BlazAdmin
                 });
                 Menus.Add(permissionMenu);
             }
+            FindMenuName(Menus, path);
         }
 
         private void NavigationManager_LocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
         {
             var path = new Uri(e.Location).LocalPath;
             AddTab(path);
+        }
+
+        void FindMenuName(List<MenuModel> menus, string path)
+        {
+            foreach (var menu in menus)
+            {
+                if (menu.Route == path)
+                {
+                    defaultMenuIndex = menu.Name;
+                    return;
+                }
+                FindMenuName(menu.Children, path);
+            }
         }
 
         void FixMenuInfo(List<MenuModel> menus)
@@ -178,7 +191,8 @@ namespace BlazAdmin
             if (!isLoadRendered)
             {
                 isLoadRendered = true;
-                AddTab(defaultMenuIndex);
+                var path = new Uri(NavigationManager.Uri).LocalPath;
+                AddTab(path);
             }
         }
 
