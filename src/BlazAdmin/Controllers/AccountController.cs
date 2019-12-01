@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BlazAdmin.Controllers
 {
@@ -25,6 +26,12 @@ namespace BlazAdmin.Controllers
                 return NotFound();
             }
             await signInManager.SignInAsync(new IdentityUser(model.Username), false);
+            return Redirect("/");
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
             return Redirect("/");
         }
     }

@@ -1,8 +1,10 @@
 ﻿using Blazui.Component;
 using Blazui.Component.EventArgs;
+using Blazui.Component.Form;
 using Blazui.Component.NavMenu;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,8 +21,11 @@ namespace BlazAdmin
         [Inject]
         private RouteService routeService { get; set; }
 
+        protected BForm form;
         [Inject]
         private MessageService MessageService { get; set; }
+        [Inject]
+        SignInManager<IdentityUser> SignInManager { get; set; }
 
         [Inject]
         private MessageBox MessageBox { get; set; }
@@ -33,6 +38,8 @@ namespace BlazAdmin
         protected string username;
         [Parameter]
         public RenderFragment LoginPage { get; set; }
+        [Parameter]
+        public RenderFragment CreatePage { get; set; }
         [Parameter]
         public float NavigationWidth { get; set; } = 250;
         /// <summary>
@@ -74,7 +81,8 @@ namespace BlazAdmin
             {
                 return;
             }
-            await MessageBox.AlertAsync("已注销登录");
+
+            await form.SubmitAsync("/account/logout");
         }
         /// <summary>
         /// 初始 Tab 集合
@@ -97,6 +105,13 @@ namespace BlazAdmin
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
             username = user.Identity.Name;
+            NavigationManager.LocationChanged += NavigationManager_LocationChanged;
+        }
+
+        private void NavigationManager_LocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+        {
+            var path = new Uri(e.Location).LocalPath;
+            AddTab(path);
         }
 
         void FixMenuInfo(List<MenuModel> menus)
@@ -124,8 +139,8 @@ namespace BlazAdmin
 
         protected void OnRouteChanging(BChangeEventArgs<string> arg)
         {
-            arg.DisallowChange = true;
-            AddTab(arg.NewValue);
+            //arg.DisallowChange = true;
+            //AddTab(arg.NewValue);
         }
 
         private void AddTab(string path)
@@ -142,6 +157,10 @@ namespace BlazAdmin
             ActiveTabName = path;
             if (!Tabs.Any(x => x.Name == ActiveTabName))
             {
+                if (CurrentMenu == null)
+                {
+                    return;
+                }
                 var model = (MenuModel)CurrentMenu.Model;
                 Tabs.Add(new TabModel()
                 {

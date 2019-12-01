@@ -28,6 +28,7 @@
                         </BSimpleCard>
                     </West>
                     <Center>
+                        <BForm @ref="form"></BForm>
                         <div class="navbar">
                             <div class="fill"></div>
                             <div class="tools">
@@ -52,17 +53,7 @@
                 </BLayout>
             </Authorized>
             <NotAuthorized>
-
-                @{
-                    if (LoginPage != null)
-                    {
-                        @LoginPage
-                    }
-                    else
-                    {
-                        <BLogin DefaultUser="DefaultUser"></BLogin>
-                    }
-                }
+                <BNotAuthorized LoginPage="LoginPage" CreatePage="CreatePage"></BNotAuthorized>
             </NotAuthorized>
         </AuthorizeView>
     </CascadingValue>

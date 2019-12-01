@@ -17,8 +17,6 @@ namespace BlazAdmin
 
         [Inject]
         SignInManager<IdentityUser> SignInManager { get; set; }
-        [CascadingParameter]
-        public BAdminTemplateBase AdminTemplate { get; set; }
         protected InputType passwordType = InputType.Password;
         internal void TogglePassword()
         {
@@ -40,7 +38,13 @@ namespace BlazAdmin
             }
 
             var model = form.GetValue<LoginInfoModel>();
-            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
+            var identityUser = await SignInManager.UserManager.FindByNameAsync(model.Username);
+            if (identityUser == null)
+            {
+                Toast("用户名或密码错误，登录失败");
+                return;
+            }
+            var result = await SignInManager.CheckPasswordSignInAsync(identityUser, model.Password, false);
             if (result.Succeeded)
             {
                 await form.SubmitAsync("/account/login");
