@@ -11,7 +11,7 @@ namespace BlazAdmin
 {
     public class BLoginBase : BComponentBase
     {
-        internal BForm form;
+        public BForm Form { get; internal set; }
         [Parameter]
         public LoginInfoModel DefaultUser { get; set; }
 
@@ -30,14 +30,14 @@ namespace BlazAdmin
             }
         }
 
-        internal async System.Threading.Tasks.Task LoginAsync()
+        public virtual async System.Threading.Tasks.Task LoginAsync()
         {
-            if (!form.IsValid())
+            if (!Form.IsValid())
             {
                 return;
             }
 
-            var model = form.GetValue<LoginInfoModel>();
+            var model = Form.GetValue<LoginInfoModel>();
             var identityUser = await SignInManager.UserManager.FindByNameAsync(model.Username);
             if (identityUser == null)
             {
@@ -47,7 +47,7 @@ namespace BlazAdmin
             var result = await SignInManager.CheckPasswordSignInAsync(identityUser, model.Password, false);
             if (result.Succeeded)
             {
-                await form.SubmitAsync("/account/login");
+                await Form.SubmitAsync("/account/login?callback=" + NavigationManager.Uri);
                 return;
             }
             Toast("用户名或密码错误，登录失败");

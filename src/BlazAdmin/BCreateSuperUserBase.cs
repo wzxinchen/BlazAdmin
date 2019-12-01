@@ -73,7 +73,7 @@ namespace BlazAdmin
             var result = await SignInManager.CheckPasswordSignInAsync(identityUser, model.Password, false);
             if (result.Succeeded)
             {
-                await form.SubmitAsync("/account/login");
+                await form.SubmitAsync("/account/login?callback=" + NavigationManager.Uri);
                 return;
             }
         }

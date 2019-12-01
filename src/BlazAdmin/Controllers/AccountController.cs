@@ -18,7 +18,7 @@ namespace BlazAdmin.Controllers
         }
 
         [HttpPost]
-        public async System.Threading.Tasks.Task<IActionResult> Login([FromForm]LoginInfoModel model)
+        public async System.Threading.Tasks.Task<IActionResult> Login([FromForm]LoginInfoModel model, [FromQuery]string callback)
         {
             var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
             if (!result.Succeeded)
@@ -26,13 +26,13 @@ namespace BlazAdmin.Controllers
                 return NotFound();
             }
             await signInManager.SignInAsync(new IdentityUser(model.Username), false);
-            return Redirect("/");
+            return Redirect(callback);
         }
 
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout([FromQuery]string callback)
         {
             await signInManager.SignOutAsync();
-            return Redirect("/");
+            return Redirect(callback);
         }
     }
 }

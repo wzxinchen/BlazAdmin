@@ -20,13 +20,16 @@ namespace BlazAdmin.Docs.Shared
             Menus.Add(new MenuModel()
             {
                 Label = "快速上手",
+                Icon = "el-icon-s-promotion",
                 Children = new List<MenuModel>() {
                   new MenuModel(){
                    Label="Blazui 入门",
+                Icon = "el-icon-s-promotion",
                    Route="/guide/blazui"
                   },
                      new MenuModel(){
                    Label="BlazAdmin 入门",
+                Icon = "el-icon-s-promotion",
                    Route="/guide/blazadmin"
                   }
                  }

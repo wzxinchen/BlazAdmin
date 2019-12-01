@@ -12,16 +12,16 @@
                                 {
                                     if (menu.Children != null && menu.Children.Any())
                                     {
-                                        <BSubMenu Label="@menu.Label">
+                                        <BSubMenu Label="@menu.Label" Icon="@menu.Icon">
                                             @foreach (var children in menu.Children)
                                             {
-                                                <BMenuItem Route="@children.Route" OnRouteChanging="OnRouteChanging" Index="@children.Name" Model="@children">@children.Label</BMenuItem>
+                                                <BMenuItem Route="@children.Route" Icon="@children.Icon" Index="@children.Name" Model="@children">@children.Label</BMenuItem>
                                             }
                                         </BSubMenu>
                                     }
                                     else
                                     {
-                                        <BMenuItem Route="@menu.Route" OnRouteChanging="OnRouteChanging" Index="@menu.Name" Model="@menu">@menu.Label</BMenuItem>
+                                        <BMenuItem Route="@menu.Route" Icon="@menu.Icon" Index="@menu.Name" Model="@menu">@menu.Label</BMenuItem>
                                     }
                                 }
                             </BMenu>
@@ -47,13 +47,13 @@
                             </div>
                         </div>
                         <BTab Type="@TabType.Card" IsClosable="true" ActiveTabName="@ActiveTabName">
-                            <BTabPanel DataSource="Tabs" Content="x => x.Content" Title="x => x.Title" Name="x => x.Name"></BTabPanel>
+                            <BTabPanel DataSource="Tabs" Content="x => x.Content" OnTabPanelChanging="OnTabPanelChanging" Title="x => x.Title" Name="x => x.Name"></BTabPanel>
                         </BTab>
                     </Center>
                 </BLayout>
             </Authorized>
             <NotAuthorized>
-                <BNotAuthorized LoginPage="LoginPage" CreatePage="CreatePage"></BNotAuthorized>
+                <BNotAuthorized LoginPage="LoginPage" CreatePage="CreatePage" DefaultUser="DefaultUser"></BNotAuthorized>
             </NotAuthorized>
         </AuthorizeView>
     </CascadingValue>

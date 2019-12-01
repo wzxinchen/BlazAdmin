@@ -1,4 +1,5 @@
 ﻿using Blazui.Component;
+using Blazui.Component.Container;
 using Blazui.Component.EventArgs;
 using Blazui.Component.Form;
 using Blazui.Component.NavMenu;
@@ -35,6 +36,8 @@ namespace BlazAdmin
         [Parameter]
         public LoginInfoModel DefaultUser { get; set; }
 
+        [Parameter]
+        public bool AutoInitilizePermissionMenus { get; set; } = true;
         protected string username;
         [Parameter]
         public RenderFragment LoginPage { get; set; }
@@ -75,7 +78,7 @@ namespace BlazAdmin
             {
                 return;
             }
-            await form.SubmitAsync("/account/logout");
+            await form.SubmitAsync("/account/login?callback=" + NavigationManager.Uri);
         }
 
         internal async System.Threading.Tasks.Task LogoutAsync()
@@ -86,15 +89,19 @@ namespace BlazAdmin
                 return;
             }
 
-            await form.SubmitAsync("/account/logout");
+            await form.SubmitAsync("/account/login?callback=" + NavigationManager.Uri);
         }
         /// <summary>
         /// 初始 Tab 集合
         /// </summary>
         [Parameter]
         public ObservableCollection<TabModel> Tabs { get; set; } = new ObservableCollection<TabModel>();
-        [Inject]
-        NavigationManager NavigationManager { get; set; }
+
+        protected void OnTabPanelChanging(BChangeEventArgs<ITab> args)
+        {
+            args.DisallowChange = true;
+            NavigationManager.NavigateTo(args.NewValue.Name);
+        }
         protected override async Task OnInitializedAsync()
         {
             var path = new Uri(NavigationManager.Uri).LocalPath;
@@ -109,7 +116,41 @@ namespace BlazAdmin
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
             username = user.Identity.Name;
+            NavigationManager.LocationChanged -= NavigationManager_LocationChanged;
             NavigationManager.LocationChanged += NavigationManager_LocationChanged;
+
+            if (AutoInitilizePermissionMenus)
+            {
+                var permissionMenu = new MenuModel();
+                permissionMenu.Label = "权限管理";
+                permissionMenu.Name = "权限管理";
+                permissionMenu.Icon = "el-icon-lock";
+                permissionMenu.Children.Add(new MenuModel()
+                {
+                    Icon = "el-icon-user-solid",
+                    Label = "用户列表",
+                    Route = "/user/list",
+                    Name = "userlist",
+                    Title = "用户列表"
+                });
+                permissionMenu.Children.Add(new MenuModel()
+                {
+                    Icon = "el-icon-s-custom",
+                    Label = "角色列表",
+                    Route = "/user/roles",
+                    Name = "rolelist",
+                    Title = "角色列表"
+                });
+                permissionMenu.Children.Add(new MenuModel()
+                {
+                    Icon = "el-icon-s-grid",
+                    Label = "功能列表",
+                    Name = "featurelist",
+                    Route = "/user/features",
+                    Title = "功能列表"
+                });
+                Menus.Add(permissionMenu);
+            }
         }
 
         private void NavigationManager_LocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
@@ -141,12 +182,6 @@ namespace BlazAdmin
             }
         }
 
-        protected void OnRouteChanging(BChangeEventArgs<string> arg)
-        {
-            //arg.DisallowChange = true;
-            //AddTab(arg.NewValue);
-        }
-
         private void AddTab(string path)
         {
             var type = routeService.GetComponent(path);
@@ -173,6 +208,7 @@ namespace BlazAdmin
                     Content = type
                 });
             }
+
             StateHasChanged();
         }
     }

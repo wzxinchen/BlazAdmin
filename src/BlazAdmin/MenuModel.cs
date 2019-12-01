@@ -11,5 +11,6 @@ namespace BlazAdmin
         public string Label { get; set; }
         public string Route { get; set; }
         public List<MenuModel> Children { get; set; } = new List<MenuModel>();
+        public string Icon { get; set; }
     }
 }

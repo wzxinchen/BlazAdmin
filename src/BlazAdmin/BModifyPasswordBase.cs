@@ -14,12 +14,8 @@ namespace BlazAdmin
     {
         protected BForm form;
 
-        protected override async Task OnInitializedAsync()
-        {
-            await base.OnInitializedAsync();
-        }
 
-        internal async System.Threading.Tasks.Task ModifyAsync()
+        public virtual async System.Threading.Tasks.Task ModifyAsync()
         {
             if (!form.IsValid())
             {
