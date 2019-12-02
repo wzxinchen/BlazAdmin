@@ -48,7 +48,7 @@ namespace BlazAdmin.Core
             }
 
             var model = form.GetValue<LoginInfoModel>();
-            var err = string.Empty;
+            string err;
             using (var scope = new TransactionScope())
             {
                 err = await UserService.CreateUserAsync(model.Username, model.Password);

@@ -1,4 +1,5 @@
 ﻿using BlazAdmin.Core;
+using BlazAdmin.Core.Abstract;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,21 +11,22 @@ namespace BlazAdmin.Authentication.Identity
 {
     public static class ExtensionBuilder
     {
-        public static IServiceCollection AddBlazAdminServices<TUser, TDbContext>(this IServiceCollection services)
+        public static IServiceCollection AddBlazAdminServices<TUser, TUserService, TDbContext>(this IServiceCollection services)
             where TUser : IdentityUser
             where TDbContext : IdentityDbContext
         {
-            return services.AddBlazAdminServices<TUser, TDbContext>(null);
+            return services.AddBlazAdminServices<TUser, TUserService, TDbContext>(null);
         }
         public static IServiceCollection AddBlazAdminServices<TDbContext>(this IServiceCollection services)
             where TDbContext : IdentityDbContext
         {
-            return services.AddBlazAdminServices<IdentityUser, TDbContext>(null);
+            return services.AddBlazAdminServices<IdentityUser, UserService, TDbContext>(null);
         }
-        public static IServiceCollection AddBlazAdminServices<TUser, TDbContext>(this IServiceCollection services, Action<IdentityOptions> optionConfigure)
+        public static IServiceCollection AddBlazAdminServices<TUser, TUserService, TDbContext>(this IServiceCollection services, Action<IdentityOptions> optionConfigure)
             where TUser : IdentityUser
             where TDbContext : IdentityDbContext
         {
+            services.AddScoped<IUserService, UserService>();
             services.AddBlazAdminCoreServices();
             services.AddAuthentication(o =>
             {

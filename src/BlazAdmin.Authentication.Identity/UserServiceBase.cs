@@ -14,6 +14,18 @@ namespace BlazAdmin.Authentication.Identity
         protected readonly SignInManager<TUser> SignInManager;
         protected readonly RoleManager<TRole> RoleManager;
 
+        protected string GetResultMessage(IdentityResult identity)
+        {
+            if (identity.Succeeded)
+            {
+                return string.Empty;
+            }
+            foreach (var item in identity.Errors)
+            {
+                return item.Description;
+            }
+            return string.Empty;
+        }
         public UserServiceBase(SignInManager<TUser> signInManager, RoleManager<TRole> roleManager)
         {
             this.SignInManager = signInManager;
