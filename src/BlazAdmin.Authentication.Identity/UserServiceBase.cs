@@ -1,7 +1,9 @@
 ﻿using BlazAdmin.Core.Abstract;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,8 +30,8 @@ namespace BlazAdmin.Authentication.Identity
         }
         public UserServiceBase(SignInManager<TUser> signInManager, RoleManager<TRole> roleManager)
         {
-            this.SignInManager = signInManager;
-            this.RoleManager = roleManager;
+            SignInManager = signInManager;
+            RoleManager = roleManager;
         }
 
         public async Task<TUser> FindUserByNameAsync(string username)
@@ -87,17 +89,10 @@ namespace BlazAdmin.Authentication.Identity
             }
             return string.Empty;
         }
-        //{
-        //    var createResult = await signInManager.UserManager.CreateAsync(new IdentityUser(username), password);
-        //    if (!createResult.Succeeded)
-        //    {
-        //        foreach (var item in createResult.Errors)
-        //        {
-        //            return item.Description;
-        //        }
-        //        return string.Empty;
-        //    }
-        //    return string.Empty;
-        //}
+
+        public async Task<List<object>> GetUsersAsync()
+        {
+            return (await SignInManager.UserManager.Users.ToListAsync()).Cast<object>().ToList();
+        }
     }
 }

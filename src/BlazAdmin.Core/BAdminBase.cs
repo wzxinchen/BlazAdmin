@@ -43,6 +43,8 @@ namespace BlazAdmin.Core
         [Parameter]
         public RenderFragment CreatePage { get; set; }
         [Parameter]
+        public RenderFragment ModifyPasswordPage { get; set; }
+        [Parameter]
         public float NavigationWidth { get; set; } = 250;
         /// <summary>
         /// 导航菜单栏标题
@@ -72,7 +74,16 @@ namespace BlazAdmin.Core
 
         internal async Task ModifyPasswordAsync()
         {
-            var result = await DialogService.ShowDialogAsync<BModifyPassword, ModifyPasswordModel>("修改密码", 500);
+            var modifyPasswordPage = ModifyPasswordPage;
+            if (modifyPasswordPage == null)
+            {
+                modifyPasswordPage = builder =>
+                {
+                    builder.OpenComponent<BModifyPassword>(0);
+                    builder.CloseComponent();
+                };
+            }
+            var result = await DialogService.ShowDialogAsync<ModifyPasswordModel>(modifyPasswordPage, "修改密码", 500);
             if (result.Result == null)
             {
                 return;

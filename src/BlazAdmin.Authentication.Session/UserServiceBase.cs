@@ -2,7 +2,7 @@
 
 namespace BlazAdmin.Authentication.Session
 {
-    public class Class1
+    public class UserServiceBase
     {
     }
 }

@@ -255,10 +255,6 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
-
   <ProjectExtensions><VisualStudio><UserProperties demo_4demos_1json__JsonSchema="http://json.schemastore.org/asmdef" /></VisualStudio></ProjectExtensions>
 
 </Project>

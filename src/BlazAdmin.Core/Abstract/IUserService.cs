@@ -11,6 +11,7 @@ namespace BlazAdmin.Core.Abstract
         Task<string> ChangePasswordAsync(string username, string oldPassword, string newPassword);
         Task<string> CreateUserAsync(string username, string password);
         Task<string> CreateRoleAsync(string roleName, string id);
+        Task<List<object>> GetUsersAsync();
         Task<string> AddToRoleAsync(string username, params string[] roles);
         Task<string> CheckPasswordAsync(string username, string password);
     }

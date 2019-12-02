@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Transactions;
 
-namespace BlazAdmin.Core
+namespace BlazAdmin.Authentication.Identity
 {
     public class BCreateSuperUserBase : BAdminPageBase
     {
@@ -18,15 +18,6 @@ namespace BlazAdmin.Core
         [Parameter]
         public LoginInfoModel DefaultUser { get; set; }
 
-        [Inject]
-        UserManager<IdentityUser> UserManager { get; set; }
-
-        [Inject]
-        RoleManager<IdentityRole> RoleManager { get; set; }
-        [Inject]
-        SignInManager<IdentityUser> SignInManager { get; set; }
-        [CascadingParameter]
-        public BAdminBase AdminTemplate { get; set; }
         protected InputType passwordType = InputType.Password;
         internal void TogglePassword()
         {
@@ -40,7 +31,7 @@ namespace BlazAdmin.Core
             }
         }
 
-        internal async System.Threading.Tasks.Task CreateAsync()
+        public virtual async System.Threading.Tasks.Task CreateAsync()
         {
             if (!form.IsValid())
             {

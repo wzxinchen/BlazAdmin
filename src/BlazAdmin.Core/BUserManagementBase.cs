@@ -1,18 +1,20 @@
-﻿using BlazAdmin.Core.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlazAdmin.Core
 {
     public class BUserManagementBase : BAdminPageBase
     {
-        protected List<UserModel> Users { get; private set; } = new List<UserModel>();
+        protected List<object> Users { get; private set; } = new List<object>();
 
-        protected override void OnInitialized()
+
+        protected override async Task OnInitializedAsync()
         {
             base.OnInitialized();
+            Users = await UserService.GetUsersAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Blazui.Component;
+﻿using BlazAdmin.Core;
+using Blazui.Component;
 using Blazui.Component.Form;
 using Blazui.Component.Input;
 using Microsoft.AspNetCore.Components;
@@ -7,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BlazAdmin.Core
+namespace BlazAdmin.Authentication.Identity
 {
     public class BLoginBase : BComponentBase
     {
