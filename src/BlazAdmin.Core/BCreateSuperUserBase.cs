@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Transactions;
 
-namespace BlazAdmin.Authentication.Identity
+namespace BlazAdmin.Core
 {
     public class BCreateSuperUserBase : BAdminPageBase
     {
@@ -39,35 +39,13 @@ namespace BlazAdmin.Authentication.Identity
             }
 
             var model = form.GetValue<LoginInfoModel>();
-            string err;
-            using (var scope = new TransactionScope())
-            {
-                err = await UserService.CreateUserAsync(model.Username, model.Password);
-                if (!string.IsNullOrWhiteSpace(err))
-                {
-                    Toast(err);
-                    return;
-                }
-                err = await UserService.CreateRoleAsync("管理员", "admin");
-                if (!string.IsNullOrWhiteSpace(err))
-                {
-                    Toast(err);
-                    return;
-                }
-                err = await UserService.AddToRoleAsync(model.Username, "管理员");
-                if (!string.IsNullOrWhiteSpace(err))
-                {
-                    Toast(err);
-                    return;
-                }
-                scope.Complete();
-            }
-            err = await UserService.CheckPasswordAsync(model.Username, model.Password);
+            var err = await UserService.CreateSuperUserAsync(model.Username, model.Password);
             if (string.IsNullOrWhiteSpace(err))
             {
                 await form.SubmitAsync("/account/login?callback=" + NavigationManager.Uri);
                 return;
             }
+            Toast(err);
         }
     }
 }

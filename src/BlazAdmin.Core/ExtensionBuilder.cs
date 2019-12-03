@@ -18,7 +18,6 @@ namespace BlazAdmin.Core
             services.AddHttpClient();
             services.AddBlazuiServices();
             services.AddSingleton<RouteService>();
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             return services;
         }
     }

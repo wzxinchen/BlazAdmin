@@ -56,8 +56,7 @@ namespace BlazAdmin.Docs
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseBlazAdmin();
 
             app.UseEndpoints(endpoints =>
             {
