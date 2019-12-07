@@ -1,9 +1,12 @@
 ﻿using BlazAdmin.Core.Abstract;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace BlazAdmin.Authentication.Identity
 {
@@ -14,10 +17,22 @@ namespace BlazAdmin.Authentication.Identity
         protected readonly SignInManager<TUser> SignInManager;
         protected readonly RoleManager<TRole> RoleManager;
 
+        protected string GetResultMessage(IdentityResult identity)
+        {
+            if (identity.Succeeded)
+            {
+                return string.Empty;
+            }
+            foreach (var item in identity.Errors)
+            {
+                return item.Description;
+            }
+            return string.Empty;
+        }
         public UserServiceBase(SignInManager<TUser> signInManager, RoleManager<TRole> roleManager)
         {
-            this.SignInManager = signInManager;
-            this.RoleManager = roleManager;
+            SignInManager = signInManager;
+            RoleManager = roleManager;
         }
 
         public async Task<TUser> FindUserByNameAsync(string username)
@@ -75,17 +90,67 @@ namespace BlazAdmin.Authentication.Identity
             }
             return string.Empty;
         }
-        //{
-        //    var createResult = await signInManager.UserManager.CreateAsync(new IdentityUser(username), password);
-        //    if (!createResult.Succeeded)
-        //    {
-        //        foreach (var item in createResult.Errors)
-        //        {
-        //            return item.Description;
-        //        }
-        //        return string.Empty;
-        //    }
-        //    return string.Empty;
-        //}
+
+        public async Task<List<object>> GetUsersAsync()
+        {
+            return (await SignInManager.UserManager.Users.ToListAsync()).Cast<object>().ToList();
+        }
+
+        public async Task<string> CreateSuperUserAsync(string username, string password)
+        {
+            string err = string.Empty;
+            using (var scope = new TransactionScope())
+            {
+                err = await CreateUserAsync(username, password);
+                if (!string.IsNullOrWhiteSpace(err))
+                {
+                    return err;
+                }
+                err = await CreateRoleAsync("管理员", "admin");
+                if (!string.IsNullOrWhiteSpace(err))
+                {
+                    return err;
+                }
+                err = await AddToRoleAsync(username, "管理员");
+                if (!string.IsNullOrWhiteSpace(err))
+                {
+                    return err;
+                }
+                scope.Complete();
+            }
+            return err;
+        }
+
+        public async Task<string> LoginAsync(string username, string password)
+        {
+            var identityUser = await FindUserByNameAsync(username);
+            if (identityUser == null)
+            {
+                return "用户名或密码错误，登录失败";
+            }
+            var result = await SignInManager.PasswordSignInAsync(identityUser, password, false, false);
+            if (!result.Succeeded)
+            {
+                if (result.IsLockedOut)
+                {
+                    return "当前用户被锁定";
+                }
+                if (result.IsNotAllowed)
+                {
+                    return "当前用户不允许登录";
+                }
+                if (result.RequiresTwoFactor)
+                {
+                    return "当前用户需要两步验证";
+                }
+            }
+            return string.Empty;
+        }
+
+        public async Task<string> LogoutAsync()
+        {
+            await SignInManager.SignOutAsync();
+            return string.Empty;
+        }
     }
 }

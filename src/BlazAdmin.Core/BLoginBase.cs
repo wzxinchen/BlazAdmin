@@ -1,4 +1,5 @@
-﻿using Blazui.Component;
+﻿using BlazAdmin.Core;
+using Blazui.Component;
 using Blazui.Component.Form;
 using Blazui.Component.Input;
 using Microsoft.AspNetCore.Components;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace BlazAdmin.Core
 {
-    public class BLoginBase : BComponentBase
+    public class BLoginBase : BAdminPageBase
     {
         public BForm Form { get; internal set; }
         [Parameter]
@@ -38,14 +39,8 @@ namespace BlazAdmin.Core
             }
 
             var model = Form.GetValue<LoginInfoModel>();
-            var identityUser = await SignInManager.UserManager.FindByNameAsync(model.Username);
-            if (identityUser == null)
-            {
-                Toast("用户名或密码错误，登录失败");
-                return;
-            }
-            var result = await SignInManager.CheckPasswordSignInAsync(identityUser, model.Password, false);
-            if (result.Succeeded)
+            var err = await UserService.CheckPasswordAsync(model.Username, model.Password);
+            if (string.IsNullOrWhiteSpace(err))
             {
                 await Form.SubmitAsync("/account/login?callback=" + NavigationManager.Uri);
                 return;

@@ -18,15 +18,6 @@ namespace BlazAdmin.Core
         [Parameter]
         public LoginInfoModel DefaultUser { get; set; }
 
-        [Inject]
-        UserManager<IdentityUser> UserManager { get; set; }
-
-        [Inject]
-        RoleManager<IdentityRole> RoleManager { get; set; }
-        [Inject]
-        SignInManager<IdentityUser> SignInManager { get; set; }
-        [CascadingParameter]
-        public BAdminBase AdminTemplate { get; set; }
         protected InputType passwordType = InputType.Password;
         internal void TogglePassword()
         {
@@ -40,7 +31,7 @@ namespace BlazAdmin.Core
             }
         }
 
-        internal async System.Threading.Tasks.Task CreateAsync()
+        public virtual async System.Threading.Tasks.Task CreateAsync()
         {
             if (!form.IsValid())
             {
@@ -48,35 +39,13 @@ namespace BlazAdmin.Core
             }
 
             var model = form.GetValue<LoginInfoModel>();
-            var err = string.Empty;
-            using (var scope = new TransactionScope())
-            {
-                err = await UserService.CreateUserAsync(model.Username, model.Password);
-                if (!string.IsNullOrWhiteSpace(err))
-                {
-                    Toast(err);
-                    return;
-                }
-                err = await UserService.CreateRoleAsync("管理员", "admin");
-                if (!string.IsNullOrWhiteSpace(err))
-                {
-                    Toast(err);
-                    return;
-                }
-                err = await UserService.AddToRoleAsync(model.Username, "管理员");
-                if (!string.IsNullOrWhiteSpace(err))
-                {
-                    Toast(err);
-                    return;
-                }
-                scope.Complete();
-            }
-            err = await UserService.CheckPasswordAsync(model.Username, model.Password);
+            var err = await UserService.CreateSuperUserAsync(model.Username, model.Password);
             if (string.IsNullOrWhiteSpace(err))
             {
                 await form.SubmitAsync("/account/login?callback=" + NavigationManager.Uri);
                 return;
             }
+            Toast(err);
         }
     }
 }
