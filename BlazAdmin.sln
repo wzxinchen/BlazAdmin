@@ -14,11 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{B0C9413B-2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8E11FDAD-45C7-4E56-95D6-A41FE41FDB39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazAdmin.Template", "src\BlazAdmin.Features\BlazAdmin.Template.csproj", "{F66CC843-2E88-4F3A-9CF8-66512D583CEF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazAdmin.Core", "src\BlazAdmin.Core\BlazAdmin.Core.csproj", "{7E400DAB-71B8-4960-9B1F-01D14FE4E135}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazAdmin.Authentication.Identity", "src\BlazAdmin.Authentication.Identity\BlazAdmin.Authentication.Identity.csproj", "{F6E06D87-FE8D-411A-A230-8F7E9DE1D802}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazAdmin.Authentication.Identity", "src\BlazAdmin.Authentication.Identity\BlazAdmin.Authentication.Identity.csproj", "{F6E06D87-FE8D-411A-A230-8F7E9DE1D802}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +32,6 @@ Global
 		{79830AD2-3FEF-4E6A-8064-BD2320146101}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79830AD2-3FEF-4E6A-8064-BD2320146101}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79830AD2-3FEF-4E6A-8064-BD2320146101}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F66CC843-2E88-4F3A-9CF8-66512D583CEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F66CC843-2E88-4F3A-9CF8-66512D583CEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F66CC843-2E88-4F3A-9CF8-66512D583CEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F66CC843-2E88-4F3A-9CF8-66512D583CEF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7E400DAB-71B8-4960-9B1F-01D14FE4E135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E400DAB-71B8-4960-9B1F-01D14FE4E135}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E400DAB-71B8-4960-9B1F-01D14FE4E135}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -52,7 +46,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{79830AD2-3FEF-4E6A-8064-BD2320146101} = {8E11FDAD-45C7-4E56-95D6-A41FE41FDB39}
-		{F66CC843-2E88-4F3A-9CF8-66512D583CEF} = {8E11FDAD-45C7-4E56-95D6-A41FE41FDB39}
 		{7E400DAB-71B8-4960-9B1F-01D14FE4E135} = {8E11FDAD-45C7-4E56-95D6-A41FE41FDB39}
 		{F6E06D87-FE8D-411A-A230-8F7E9DE1D802} = {8E11FDAD-45C7-4E56-95D6-A41FE41FDB39}
 	EndGlobalSection
