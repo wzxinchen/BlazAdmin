@@ -105,9 +105,9 @@ namespace BlazAdmin.Core
         /// 初始 Tab 集合
         /// </summary>
         [Parameter]
-        public ObservableCollection<TabModel> Tabs { get; set; } = new ObservableCollection<TabModel>();
+        public ObservableCollection<TabOption> Tabs { get; set; } = new ObservableCollection<TabOption>();
 
-        protected void OnTabPanelChanging(BChangeEventArgs<ITab> args)
+        protected void OnTabPanelChanging(BChangeEventArgs<BTabPanelBase> args)
         {
             args.DisallowChange = true;
             NavigationManager.NavigateTo(args.NewValue.Name);
@@ -218,19 +218,31 @@ namespace BlazAdmin.Core
                 return;
             }
             ActiveTabName = path;
-            if (!Tabs.Any(x => x.Name == ActiveTabName))
+            foreach (var item in Tabs)
+            {
+                item.IsActive = false;
+            }
+            var activeTab = Tabs.FirstOrDefault(x => x.Name == ActiveTabName);
+            if (activeTab == null)
             {
                 if (CurrentMenu == null)
                 {
                     return;
                 }
                 var model = (MenuModel)CurrentMenu.Model;
-                Tabs.Add(new TabModel()
+                Tabs.Add(new TabOption()
                 {
                     Title = model.Title ?? model.Label,
+                    IsClosable = true,
+                    IsActive = true,
+                    BodyStyle = model.Flex ? "display:flex;" : "display:block;",
                     Name = ActiveTabName,
                     Content = type
                 });
+            }
+            else
+            {
+                activeTab.IsActive = true;
             }
 
             StateHasChanged();

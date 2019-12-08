@@ -46,8 +46,7 @@
                                 </BDropDown>
                             </div>
                         </div>
-                        <BTab Type="@TabType.Card" IsClosable="true" ActiveTabName="@ActiveTabName">
-                            <BTabPanel DataSource="Tabs" Content="x => x.Content" OnTabPanelChanging="OnTabPanelChanging" Title="x => x.Title" Name="x => x.Name"></BTabPanel>
+                        <BTab Type="@TabType.Card" DataSource="Tabs">
                         </BTab>
                     </Center>
                 </BLayout>
