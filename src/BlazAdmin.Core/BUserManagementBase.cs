@@ -22,7 +22,7 @@ namespace BlazAdmin.Core
         }
         public void Del(object user)
         {
-            UserService.DeleteUserAsync(user)
+            //UserService.DeleteUserAsync(user)
         }
     }
 }
