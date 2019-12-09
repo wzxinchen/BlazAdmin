@@ -1,14 +1,14 @@
 ﻿@page "/user/list"
-@*@using BlazAdmin.Core.Model
 @inherits BUserManagementBase
 <BButtonGroup>
     <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small">创建用户</BButton>
     <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Small">批量删除</BButton>
 </BButtonGroup>
-<BTable TRow="UserModel" DataSource="Users">
-    <BTableColumns TRow="UserModel">
-        <BTableCheckBoxColumn TRow="UserModel"></BTableCheckBoxColumn>
-        <BTableColumn TRow="UserModel" Text="用户名" Property="x=>x.Username"></BTableColumn>
-        <BTableDateTimeColumn TRow="UserModel" Text="创建日期" Property="x=>x.CreationTime"></BTableDateTimeColumn>
+<BTable DataSource="Users">
+    <BTableColumns TRow="object">
+        <BTableTemplateColumn TRow="object" Text="操作">
+            <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Mini" OnClick="@(e=> Edit(context))">编辑</BButton>
+            <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Mini" OnClick="@(e=> Del(context))">删除</BButton>
+        </BTableTemplateColumn>
     </BTableColumns>
-</BTable>*@
+</BTable>

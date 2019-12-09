@@ -16,5 +16,13 @@ namespace BlazAdmin.Core
             base.OnInitialized();
             Users = await UserService.GetUsersAsync();
         }
+        public void Edit(object user)
+        {
+
+        }
+        public void Del(object user)
+        {
+            //UserService.DeleteUserAsync(user)
+        }
     }
 }

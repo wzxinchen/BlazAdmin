@@ -13,6 +13,7 @@ namespace BlazAdmin.Core.Abstract
         Task<string> CreateRoleAsync(string roleName, string id);
         Task<List<object>> GetUsersAsync();
         Task<string> AddToRoleAsync(string username, params string[] roles);
+        Task<string> DeleteUserAsync(object user);
 
         /// <summary>
         /// 仅检查密码
