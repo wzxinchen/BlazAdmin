@@ -99,7 +99,7 @@ namespace BlazAdmin.Core
                 return;
             }
 
-            await form.SubmitAsync("/account/login?callback=" + NavigationManager.Uri);
+            await form.SubmitAsync("/account/logout?callback=" + NavigationManager.Uri);
         }
         /// <summary>
         /// 初始 Tab 集合
