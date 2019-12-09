@@ -41,55 +41,68 @@ namespace BlazAdmin.Docs.Shared
                 Children = new List<MenuModel>() {
                   new MenuModel(){
                    Label="Button 按钮",
-                   Route="/button"
+                   Route="/button",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="Input 输入框",
-                   Route="/input"
+                   Route="/input",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="Radio 单选框",
-                   Route="/radio"
+                   Route="/radio",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="Checkbox 多选框",
-                   Route="/checkbox"
+                   Route="/checkbox",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="Switch",
-                   Route="/switch"
+                   Route="/switch",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="Select 选择器",
-                   Route="/select"
+                   Route="/select",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="NavMenu 导航菜单",
-                   Route="/menu"
+                   Route="/menu",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="Pagination 分页",
-                   Route="/pagination"
+                   Route="/pagination",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="Tabs 标签页",
-                   Route="/tabs"
+                   Route="/tabs",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="Table 表格",
-                   Route="/table"
+                   Route="/table",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="Form 表单",
-                   Route="/form"
+                   Route="/form",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="DatePicker 日期选择器",
-                   Route="/datepicker"
+                   Route="/datepicker",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="Layout 布局组件",
-                   Route="/layout"
+                   Route="/layout",
+                   Flex=false
                   }
                  }
             });
@@ -99,19 +112,23 @@ namespace BlazAdmin.Docs.Shared
                 Children = new List<MenuModel>() {
                   new MenuModel(){
                    Label="Message 消息",
-                   Route="/message"
+                   Route="/message",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="Loading 加载中",
-                   Route="/loading"
+                   Route="/loading",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="MessageBox 消息弹窗",
-                   Route="/messagebox"
+                   Route="/messagebox",
+                   Flex=false
                   },
                      new MenuModel(){
                    Label="Dialog 对话框",
-                   Route="/dialog"
+                   Route="/dialog",
+                   Flex=false
                   }
                  }
             });

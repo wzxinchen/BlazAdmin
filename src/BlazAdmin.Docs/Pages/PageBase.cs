@@ -1,5 +1,4 @@
-﻿
-using Blazui.Component.Container;
+﻿using Blazui.Component.Container;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
@@ -37,11 +36,12 @@ namespace BlazAdmin.Docs.Pages
                 if (System.IO.File.Exists(razorPath))
                 {
                     var code = System.IO.File.ReadAllText(razorPath);
-                    demoModel.Codes.Add(new CodeModel()
+                    demoModel.Options.Add(new TabOption()
                     {
-                        Code = WebUtility.HtmlEncode(code),
-                        FileName = item.Name + ".razor",
-                        Language = "razor"
+                        Content = GetCode(WebUtility.HtmlEncode(code), "razor"),
+                        Name = item.Name,
+                        Title = item.Name + ".razor",
+                        OnRenderCompletedAsync = TabCode_OnRenderCompleteAsync
                     });
                     demos.Add(demoModel);
                     continue;
@@ -65,11 +65,12 @@ namespace BlazAdmin.Docs.Pages
                             language = "csharp";
                             break;
                     }
-                    demoModel.Codes.Add(new CodeModel()
+                    demoModel.Options.Add(new TabOption()
                     {
-                        Code = WebUtility.HtmlEncode(code),
-                        FileName = Path.GetFileName(codeFile),
-                        Language = language
+                        Content = GetCode(WebUtility.HtmlEncode(code), language),
+                        Title = Path.GetFileName(codeFile),
+                        Name = language,
+                        OnRenderCompletedAsync = TabCode_OnRenderCompleteAsync
                     });
                 }
                 demos.Add(demoModel);
@@ -81,8 +82,6 @@ namespace BlazAdmin.Docs.Pages
         [Inject]
         protected IJSRuntime jSRuntime { get; set; }
 
-        [Parameter]
-        public string Name { get; set; }
         protected IList<DemoModel> demos;
 
         protected string GetCode(string code, string language)
@@ -95,7 +94,10 @@ namespace BlazAdmin.Docs.Pages
             return fileName.Replace(".", string.Empty);
         }
 
-
+        [Parameter]
+        public string Name { get; set; }
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
         protected override void OnInitialized()
         {
             demos = Code(Name);
@@ -105,15 +107,9 @@ namespace BlazAdmin.Docs.Pages
             }
         }
 
-        protected async Task<bool> ActiveTabChangingAsync(ITab tab)
+        protected async Task TabCode_OnRenderCompleteAsync(object tab)
         {
-            tab.OnRenderCompletedAsync += TabCode_OnRenderCompleteAsync;
-            return await Task.FromResult(true);
-        }
-        protected async Task TabCode_OnRenderCompleteAsync(ITab tab)
-        {
-            tab.OnRenderCompletedAsync -= TabCode_OnRenderCompleteAsync;
-            await jSRuntime.InvokeAsync<object>("renderHightlight", tab.TabContainer.Content);
+            await jSRuntime.InvokeVoidAsync("renderHightlight", ((BTabPanelBase)tab).TabContainer.Content);
         }
     }
 }
