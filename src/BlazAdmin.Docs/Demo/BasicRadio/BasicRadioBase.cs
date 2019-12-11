@@ -8,7 +8,7 @@ namespace BlazAdmin.Docs.Demo.BasicRadio
 {
     public class BasicRadioBase : ComponentBase
     {
-        protected string selectedValue = "1";
-        protected string selectedValue1 = "3";
+        protected int selectedValue = 1;
+        protected int selectedValue1 = 3;
     }
 }

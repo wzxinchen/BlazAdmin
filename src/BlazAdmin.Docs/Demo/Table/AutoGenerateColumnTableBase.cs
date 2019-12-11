@@ -1,69 +1,59 @@
 ﻿using Blazui.Component;
 using Blazui.Component.Table;
-using BlazAdmin.Docs.Demo.Table;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazAdmin.Docs.Demo.Loading
+namespace BlazAdmin.Docs.Demo.Table
 {
-    public class BasicLoadingBase : ComponentBase
+    public class AutoGenerateColumnTableBase : ComponentBase
     {
-        protected List<TestData> Datas = new List<TestData>();
+        protected List<AutoGenerateColumnTestData> Datas = new List<AutoGenerateColumnTestData>();
 
         [Inject]
-        private LoadingService LoadingService { get; set; }
-        protected IContainerComponent table;
+        MessageService MessageService { get; set; }
+
         protected override void OnInitialized()
         {
-            Datas.Add(new TestData()
+            Datas.Add(new AutoGenerateColumnTestData()
             {
                 Address = "地址1",
                 Name = "张三",
                 Time = DateTime.Now
             });
-            Datas.Add(new TestData()
+            Datas.Add(new AutoGenerateColumnTestData()
             {
                 Address = "地址2",
                 Name = "张三1",
                 Time = DateTime.Now
             });
-            Datas.Add(new TestData()
+            Datas.Add(new AutoGenerateColumnTestData()
             {
                 Address = "地址3",
                 Name = "张三3",
-                Time = DateTime.Now
+                Time = DateTime.Now,
+                Yes = true
             });
         }
 
         internal async Task<PagerResult> LoadDataSource(int currentPage)
         {
-            var result = new PagerResult()
+            var result= new PagerResult()
             {
                 Rows = Datas,
                 Total = Datas.Count
             };
             return await Task.FromResult(result);
         }
-        protected void RenderCompleted()
+        public void Edit(object testData)
         {
-            table.Loading(LoadingService);
+            MessageService.Show($"正在编辑 " + ((AutoGenerateColumnTestData)testData).Name);
         }
-        protected void CustomRenderCompleted()
+        public void Del(object testData)
         {
-            table.Loading(LoadingService, "拼命加载中", "el-icon-loading", "rgba(0, 0, 0, 0.8)");
-        }
-
-        protected void ShowLoading()
-        {
-            table.Loading(LoadingService);
-        }
-
-        protected void CloseLoading()
-        {
-            table.Close(LoadingService);
+            MessageService.Show($"正在删除 " + ((AutoGenerateColumnTestData)testData).Name, MessageType.Warning);
         }
     }
 }

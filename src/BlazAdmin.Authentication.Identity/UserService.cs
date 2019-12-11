@@ -26,5 +26,11 @@ namespace BlazAdmin.Authentication.Identity
             var result = await SignInManager.UserManager.CreateAsync(user, password);
             return GetResultMessage(result);
         }
+
+        public override async Task<string> DeleteUserAsync(object user)
+        {
+            var result = await SignInManager.UserManager.DeleteAsync((IdentityUser)user);
+            return GetResultMessage(result);
+        }
     }
 }

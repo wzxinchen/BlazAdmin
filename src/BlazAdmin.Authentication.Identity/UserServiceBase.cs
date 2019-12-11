@@ -152,5 +152,7 @@ namespace BlazAdmin.Authentication.Identity
             await SignInManager.SignOutAsync();
             return string.Empty;
         }
+
+        public abstract Task<string> DeleteUserAsync(object user);
     }
 }

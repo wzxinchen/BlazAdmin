@@ -20,9 +20,5 @@
     <ProjectReference Include="..\..\..\blazui\src\Blazui.Component\Blazui.Component.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
-
 
 </Project>

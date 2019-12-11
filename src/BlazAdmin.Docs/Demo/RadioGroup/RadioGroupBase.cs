@@ -8,6 +8,6 @@ namespace BlazAdmin.Docs.Demo.RadioGroup
 {
     public class RadioGroupBase : ComponentBase
     {
-        protected string selectedValue = "2";
+        protected int selectedValue = 2;
     }
 }
