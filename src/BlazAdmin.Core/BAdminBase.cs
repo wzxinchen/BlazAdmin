@@ -36,7 +36,7 @@ namespace BlazAdmin.Core
         public LoginInfoModel DefaultUser { get; set; }
 
         [Parameter]
-        public bool AutoInitilizePermissionMenus { get; set; } = true;
+        public bool EnablePermissionMenus { get; set; } = true;
         protected string username;
         [Parameter]
         public RenderFragment LoginPage { get; set; }
@@ -128,7 +128,7 @@ namespace BlazAdmin.Core
             NavigationManager.LocationChanged -= NavigationManager_LocationChanged;
             NavigationManager.LocationChanged += NavigationManager_LocationChanged;
 
-            if (AutoInitilizePermissionMenus)
+            if (EnablePermissionMenus)
             {
                 var permissionMenu = new MenuModel();
                 permissionMenu.Label = "权限管理";
