@@ -1,4 +1,4 @@
-﻿using BlazAdmin.Core;
+﻿using BlazAdmin.Client;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
