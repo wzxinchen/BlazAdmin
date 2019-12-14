@@ -65,7 +65,13 @@ namespace BlazAdmin.Authentication.Identity
                 o.DefaultScheme = IdentityConstants.ApplicationScheme;
                 o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
             })
-            .AddIdentityCookies();
+            .AddIdentityCookies(o =>
+            {
+                //o.ApplicationCookie.Configure(cookie =>
+                //{
+                //    cookie.Cookie.HttpOnly = false;
+                //});
+            });
             var builder = services.AddIdentityCore<TUser>(o =>
               {
                   o.Stores.MaxLengthForKeys = 128;

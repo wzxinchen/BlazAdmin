@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +15,12 @@ namespace BlazAdmin.Server
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;
+        private readonly IOptions<CookieAuthenticationOptions> options;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IOptions<CookieAuthenticationOptions> options)
         {
             this.userService = userService;
+            this.options = options;
         }
 
         /// <summary>
@@ -55,10 +61,15 @@ namespace BlazAdmin.Server
         /// <returns></returns>
         [HttpPost]
         [Route("api/login")]
-        public async System.Threading.Tasks.Task<IActionResult> Login([FromBody]UserInfo user,[FromQuery]string callback)
+        public async System.Threading.Tasks.Task<IActionResult> Login([FromForm]UserInfo user, [FromQuery]string callback)
         {
             var err = await userService.LoginAsync(user.Username, user.Password);
 
+            //HttpContext.Response.Headers.TryGetValue("Set-Cookie", out var cookie);
+            //if (cookie != string.Empty)
+            //{
+            //    var value = options.Value.TicketDataFormat.Unprotect(cookie.ToString());
+            //}
             if (string.IsNullOrWhiteSpace(err))
             {
                 return Redirect(callback);

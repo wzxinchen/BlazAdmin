@@ -11,7 +11,6 @@ namespace BlazAdmin.Server
     {
         public static IApplicationBuilder UseBlazAdminServerCore(this IApplicationBuilder builder)
         {
-            builder.UseMiddleware<ReverseProxyMiddleware>();
             return builder;
         }
     }

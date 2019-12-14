@@ -1,4 +1,5 @@
 ﻿using Blazui.Component;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,12 @@ namespace BlazAdmin.Client
             }
             services.AddScoped<UserService>();
             return services;
+        }
+
+        public static IApplicationBuilder UseBlazAdminCore(this IApplicationBuilder builder)
+        {
+            builder.UseMiddleware<ReverseProxyMiddleware>();
+            return builder;
         }
     }
 }

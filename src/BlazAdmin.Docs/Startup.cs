@@ -44,6 +44,7 @@ namespace BlazAdmin.Docs
                 app.UseHsts();
             }
 
+            app.UseBlazAdminCore();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
