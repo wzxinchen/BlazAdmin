@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,5 +9,10 @@ namespace BlazAdmin.Server
 {
     public static class ExtensionBuilder
     {
+        public static IApplicationBuilder UseBlazAdminServerCore(this IApplicationBuilder builder)
+        {
+            builder.UseMiddleware<ReverseProxyMiddleware>();
+            return builder;
+        }
     }
 }

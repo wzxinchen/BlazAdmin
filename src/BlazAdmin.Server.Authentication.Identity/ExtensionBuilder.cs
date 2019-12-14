@@ -96,6 +96,7 @@ namespace BlazAdmin.Authentication.Identity
         }
         public static IApplicationBuilder UseBlazAdminServer(this IApplicationBuilder applicationBuilder)
         {
+            applicationBuilder.UseBlazAdminServerCore();
             //applicationBuilder.UseSwagger();
             //applicationBuilder.UseSwaggerUI(c =>
             //{

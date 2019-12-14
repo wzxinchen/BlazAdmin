@@ -43,6 +43,7 @@ namespace BlazAdmin.Docs.Server
             }
 
             app.UseBlazAdminServer();
+
             app.UseRouting();
 
             app.UseAuthorization();

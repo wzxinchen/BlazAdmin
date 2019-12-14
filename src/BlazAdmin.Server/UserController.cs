@@ -55,13 +55,13 @@ namespace BlazAdmin.Server
         /// <returns></returns>
         [HttpPost]
         [Route("api/login")]
-        public async System.Threading.Tasks.Task<IActionResult> Login([FromBody]UserInfo user)
+        public async System.Threading.Tasks.Task<IActionResult> Login([FromBody]UserInfo user,[FromQuery]string callback)
         {
             var err = await userService.LoginAsync(user.Username, user.Password);
 
             if (string.IsNullOrWhiteSpace(err))
             {
-                return Ok();
+                return Redirect(callback);
             }
             return BadRequest(err);
         }

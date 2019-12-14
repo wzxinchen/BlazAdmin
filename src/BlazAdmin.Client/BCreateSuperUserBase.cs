@@ -42,7 +42,7 @@ namespace BlazAdmin.Client
             var result = await UserService.CreateSuperUserAsync(model.Username, model.Password);
             if (string.IsNullOrWhiteSpace(result))
             {
-                await form.SubmitAsync(UserService.Options.ServerUrl + UserService.Options.LoginUrl + "?callback=" + NavigationManager.Uri);
+                await form.SubmitAsync("/proxy" + UserService.Options.LoginUrl + "?callback=" + NavigationManager.Uri);
                 return;
             }
             Toast(result);
