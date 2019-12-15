@@ -1,14 +1,14 @@
-﻿using BlazAdmin.Server;
+﻿using BlazAdmin.Abstract;
+using Blazui.Component.Form;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace BlazAdmin.Authentication.Identity
+namespace BlazAdmin.ServerRender
 {
     public abstract class UserServiceBase<TUser, TRole> : IUserService
         where TUser : IdentityUser
@@ -33,6 +33,12 @@ namespace BlazAdmin.Authentication.Identity
         {
             SignInManager = signInManager;
             RoleManager = roleManager;
+        }
+
+
+        public async Task<bool> HasUserAsync()
+        {
+            return await SignInManager.UserManager.Users.AnyAsync();
         }
 
         public async Task<TUser> FindUserByNameAsync(string username)
@@ -83,6 +89,10 @@ namespace BlazAdmin.Authentication.Identity
         public async Task<string> CheckPasswordAsync(string username, string password)
         {
             var user = await FindUserByNameAsync(username);
+            if (user == null)
+            {
+                return "用户名或密码错误";
+            }
             var result = await SignInManager.CheckPasswordSignInAsync(user, password, false);
             if (!result.Succeeded)
             {
@@ -121,8 +131,13 @@ namespace BlazAdmin.Authentication.Identity
             return err;
         }
 
-        public async Task<string> LoginAsync(string username, string password)
+        public async ValueTask<string> LoginAsync(BForm form, string username, string password, string callback)
         {
+            if (form != null)
+            {
+                await form.SubmitAsync("/api/login?callback=" + callback);
+                return string.Empty;
+            }
             var identityUser = await FindUserByNameAsync(username);
             if (identityUser == null)
             {
@@ -147,17 +162,37 @@ namespace BlazAdmin.Authentication.Identity
             return string.Empty;
         }
 
-        public async Task<string> LogoutAsync()
+        public async ValueTask<string> LogoutAsync(BForm form, string callback)
         {
+            if (form != null)
+            {
+                await form.SubmitAsync("/api/logout?callback" + callback);
+                return string.Empty;
+            }
             await SignInManager.SignOutAsync();
             return string.Empty;
         }
 
-        public abstract Task<string> DeleteUserAsync(object user);
 
-        public async Task<bool> HasUserAsync()
+        public abstract Task<string> DeleteUsersAsync(params object[] users);
+
+        public async ValueTask SubmitLogoutAsync(BForm form, string callbackUri)
         {
-           return await SignInManager.UserManager.Users.AnyAsync();
+            await form.SubmitAsync("/api/logout?callback=" + callbackUri);
+        }
+        public async ValueTask SubmitLoginAsync(BForm form, string callbackUri)
+        {
+            await form.SubmitAsync("/api/login?callback=" + callbackUri);
+        }
+
+        public async ValueTask<bool> IsRequireInitilizeAsync()
+        {
+            return (!await SignInManager.UserManager.Users.AnyAsync());
+        }
+
+        public async ValueTask<string> ExecuteLoginAsync(Func<ValueTask<string>> action)
+        {
+            return await action();
         }
     }
 }

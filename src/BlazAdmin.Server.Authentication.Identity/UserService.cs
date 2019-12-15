@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazAdmin.Authentication.Identity
+namespace BlazAdmin.ServerRender
 {
     public class UserService : UserServiceBase<IdentityUser, IdentityRole>
     {
@@ -23,27 +24,23 @@ namespace BlazAdmin.Authentication.Identity
 
         public override async Task<string> CreateUserAsync(string username, string password)
         {
-            try
+            var user = new IdentityUser(username);
+            var result = await SignInManager.UserManager.CreateAsync(user, password);
+            return GetResultMessage(result);
+        }
+
+        public override async Task<string> DeleteUsersAsync(params object[] users)
+        {
+            foreach (IdentityUser item in users)
             {
-                var user = new IdentityUser(username);
-                var result = await SignInManager.UserManager.CreateAsync(user, password);
+                var result = await SignInManager.UserManager.DeleteAsync(item);
+                if (result.Succeeded)
+                {
+                    continue;
+                }
                 return GetResultMessage(result);
             }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-
-        public bool HasUser()
-        {
-            return SignInManager.UserManager.Users.Any();
-        }
-
-        public override async Task<string> DeleteUserAsync(object user)
-        {
-            var result = await SignInManager.UserManager.DeleteAsync((IdentityUser)user);
-            return GetResultMessage(result);
+            return string.Empty;
         }
     }
 }

@@ -10,7 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity;
-using BlazAdmin.Client;
+using BlazAdmin.Docs.ServerRender;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazAdmin.Docs
 {
@@ -27,6 +28,10 @@ namespace BlazAdmin.Docs
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DocsDbContext>(options =>
+            {
+                options.UseInMemoryDatabase("docs");
+            });
             services.AddBlazAdmin();
         }
 
@@ -44,13 +49,14 @@ namespace BlazAdmin.Docs
                 app.UseHsts();
             }
 
-            app.UseBlazAdminCore();
+            app.UseBlazAdmin();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });

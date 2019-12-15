@@ -1,77 +1,35 @@
-﻿using BlazAdmin.Server;
+﻿using BlazAdmin.Abstract;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace BlazAdmin.Authentication.Identity
+namespace BlazAdmin.ServerRender
 {
     public static class ExtensionBuilder
     {
-        public static IServiceCollection AddBlazAdminServer<TDbContext>(this IServiceCollection services)
+        public static IServiceCollection AddBlazAdmin<TDbContext>(this IServiceCollection services)
             where TDbContext : IdentityDbContext
         {
-            return services.AddBlazAdminServer<TDbContext>("BlazAdmin 接口服务");
-        }
-
-        public static IServiceCollection AddBlazAdminServer<TDbContext>(this IServiceCollection services, string swaggerTitle)
-            where TDbContext : IdentityDbContext
-        {
-            services.AddControllers()
-                .AddApplicationPart(typeof(ExtensionBuilder).Assembly);
-            services.AddBlazAdminServer<IdentityUser, UserService, TDbContext>(null);
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1",new Swashbuckle.AspNetCore.Swagger.Info
-            //    {
-            //        Title = swaggerTitle,
-            //        Version = "v1"
-            //    });
-            //    c.AddSecurityDefinition("Cookie", new ApiKeyScheme { In = "header", Description = "Please enter Cookie with Bearer into field", Name = "Authorization", Type = "apiKey" });
-            //    c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
-            //    {
-            //        { "Bearer", Enumerable.Empty<string>() },
-            //    });
-            //});
+            services.AddBlazAdmin<IdentityUser, UserService, TDbContext>(null);
             return services;
         }
-        //public static IServiceCollection AddBlazAdminServices<TUser, TUserService, TDbContext>(this IServiceCollection services)
-        //    where TUser : IdentityUser
-        //    where TDbContext : IdentityDbContext
-        //    where TUserService : class, IUserService
-        //{
-        //    return services.AddBlazAdminServices<TUser, TUserService, TDbContext>(null);
-        //}
 
-        //public static IServiceCollection AddBlazAdminServices<TDbContext>(this IServiceCollection services)
-        //    where TDbContext : IdentityDbContext
-        //{
-        //    return services.AddBlazAdminServices<IdentityUser, UserService, TDbContext>(null);
-        //}
-
-        private static IServiceCollection AddBlazAdminServer<TUser, TUserService, TDbContext>(this IServiceCollection services, Action<IdentityOptions> optionConfigure)
+        public static IServiceCollection AddBlazAdmin<TUser, TUserService, TDbContext>(this IServiceCollection services, Action<IdentityOptions> optionConfigure)
             where TUser : IdentityUser
             where TDbContext : IdentityDbContext
             where TUserService : class, IUserService
         {
-            services.AddScoped<IUserService, TUserService>();
+            services.AddControllers();
+            services.AddBlazAdminCore<TUserService>();
             services.AddAuthentication(o =>
             {
                 o.DefaultScheme = IdentityConstants.ApplicationScheme;
                 o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
             })
-            .AddIdentityCookies(o =>
-            {
-                //o.ApplicationCookie.Configure(cookie =>
-                //{
-                //    cookie.Cookie.HttpOnly = false;
-                //});
-            });
+            .AddIdentityCookies();
             var builder = services.AddIdentityCore<TUser>(o =>
               {
                   o.Stores.MaxLengthForKeys = 128;
@@ -102,7 +60,7 @@ namespace BlazAdmin.Authentication.Identity
         }
         public static IApplicationBuilder UseBlazAdminServer(this IApplicationBuilder applicationBuilder)
         {
-            applicationBuilder.UseBlazAdminServerCore();
+            //applicationBuilder.UseBlazAdminServerCore();
             //applicationBuilder.UseSwagger();
             //applicationBuilder.UseSwaggerUI(c =>
             //{

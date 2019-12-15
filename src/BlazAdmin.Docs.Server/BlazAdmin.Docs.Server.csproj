@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BlazAdmin.Server.Authentication.Identity\BlazAdmin.Server.Authentication.Identity.csproj" />
+    <ProjectReference Include="..\BlazAdmin.Server.Authentication.Identity\BlazAdmin.ServerRender.csproj" />
   </ItemGroup>
 
 
