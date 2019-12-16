@@ -19,10 +19,19 @@
         "name": "LeftTab"
       },
       {
-        "title": "可编辑的标签页",
+        "title": "调用事件API实现可编辑的标签页",
         "name": "EditableTab",
         "files": [
           "EditableTab.razor",
+          "TestCheckBoxInTab.razor"
+        ]
+      },
+      {
+        "title": "双向绑定实现可编辑的标签页",
+        "name": "EditableTab",
+        "files": [
+          "BindingEditableTab.razor",
+          "BindingEditableTabBase.cs",
           "TestCheckBoxInTab.razor"
         ]
       }
@@ -111,6 +120,31 @@
           "AlignForm.razor",
           "BasicFormBase.cs"
         ]
+      },
+      {
+        "title": "表单双向绑定",
+        "name": "Form",
+        "files": [
+          "InitilizeForm.razor",
+          "InitilizeFormBase.cs"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "layout",
+    "demos": [
+      {
+        "title": "基础用法",
+        "name": "BasicLayout"
+      },
+      {
+        "title": "嵌套布局",
+        "name": "NestedLayout"
+      },
+      {
+        "title": "后台模板用法",
+        "name": "Layout"
       }
     ]
   },
@@ -170,6 +204,33 @@
           "BasicTableBase.cs",
           "TestData.cs"
         ]
+      },
+      {
+        "title": "自动生成列，宽度自适应",
+        "name": "Table",
+        "files": [
+          "AutoGenerateColumnTable.razor",
+          "AutoGenerateColumnTableBase.cs",
+          "AutoGenerateColumnTestData.cs"
+        ]
+      },
+      {
+        "title": "分页",
+        "name": "Table",
+        "files": [
+          "PaginationTable.razor",
+          "PaginationTableBase.cs",
+          "AutoGenerateColumnTestData.cs"
+        ]
+      },
+      {
+        "title": "过滤显示字段",
+        "name": "Table",
+        "files": [
+          "IgnoreColumnTable.razor",
+          "PaginationTableBase.cs",
+          "AutoGenerateColumnTestData.cs"
+        ]
       }
     ]
   },
@@ -207,15 +268,6 @@
           "ManualLoading.razor",
           "BasicLoadingBase.cs"
         ]
-      }
-    ]
-  },
-  {
-    "name": "layout",
-    "demos": [
-      {
-        "title": "基础用法",
-        "name": "Layout"
       }
     ]
   },
@@ -262,7 +314,7 @@
         ]
       },
       {
-        "title": "带背景",
+        "title": "无背景",
         "name": "Pagination",
         "files": [
           "BackgroundPagination.razor"
@@ -369,6 +421,13 @@
     "name": "menu",
     "demos": [
       {
+        "title": "横向菜单",
+        "name": "Menu",
+        "files": [
+          "HorizontalMenu.razor"
+        ]
+      },
+      {
         "title": "坚向菜单",
         "name": "Menu",
         "files": [
@@ -401,14 +460,6 @@
   {
     "name": "checkbox",
     "demos": [
-      {
-        "title": "动态渲染",
-        "name": "CheckBox",
-        "files": [
-          "DynamicRender.razor",
-          "DynamicRenderBase.cs"
-        ]
-      },
       {
         "title": "硬编码",
         "name": "CheckBox",

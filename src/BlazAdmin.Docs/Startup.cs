@@ -9,12 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BlazAdmin.Docs.Data;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using BlazAdmin.Core;
-using BlazAdmin.Authentication.Identity;
+using BlazAdmin.Docs.ServerRender;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazAdmin.Docs
 {
@@ -31,12 +28,11 @@ namespace BlazAdmin.Docs
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddBlazAdminServices<DocsDbContext>();
             services.AddDbContext<DocsDbContext>(options =>
             {
                 options.UseInMemoryDatabase("docs");
             });
-            services.AddSingleton<WeatherForecastService>();
+            services.AddBlazAdmin();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,14 +49,14 @@ namespace BlazAdmin.Docs
                 app.UseHsts();
             }
 
+            app.UseBlazAdmin();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseBlazAdmin();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });

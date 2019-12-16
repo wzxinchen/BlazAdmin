@@ -8,6 +8,6 @@ namespace BlazAdmin.Docs.Demo.RadioButton
 {
     public class RadioButtonBase : ComponentBase
     {
-        protected string selectedValue = "1";
+        protected int selectedValue = 1;
     }
 }
