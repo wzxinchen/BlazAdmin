@@ -31,7 +31,7 @@ namespace BlazAdmin.Docs.Demo.Form
         {
             value = new Activity()
             {
-                Area = new OptionModel<string>("区域1", "shanghai"),
+                Area = Area.Beijing,
                 Delivery = true,
                 Description = "详情",
                 Name = "测试",
