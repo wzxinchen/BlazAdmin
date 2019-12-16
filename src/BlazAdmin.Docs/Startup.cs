@@ -10,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity;
-using BlazAdmin.Docs.ServerRender;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazAdmin.Docs
