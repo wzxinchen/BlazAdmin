@@ -22,4 +22,4 @@ jobs:
     - name: pack nuget
       run: dotnet pack src/BlazAdmin/BlazAdmin.csproj /p:PackageVersion=0.0.1.${BUILD_NUMBER} -c Release --no-build --no-restore
     - name: push nuget
-      run: dotnet nuget push src/BlazAdmin/bin/Release/BlazAdmin.0.0.1.${BUILD_NUMBER}.nupkg -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push src/BlazAdmin/bin/Release/BlazAdmin.0.0.1.${BUILD_NUMBER}.nupkg -s https://api.nuget.org/v3/index.json  -k oy2d44fv6wifoxdcwgkas7iwi37eahuexbsilepbewbnnu
