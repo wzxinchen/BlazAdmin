@@ -4,6 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <IsPackable>true</IsPackable>
+    <Description>基于Blazui的后台管理模板，无JS，无TS，非 Silverlight，非 WebForm，一个标签即可使用</Description>
+    <Authors>wzxinchen</Authors>
   </PropertyGroup>
 
   <ItemGroup>
