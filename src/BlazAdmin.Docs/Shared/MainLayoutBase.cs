@@ -112,11 +112,6 @@ namespace BlazAdmin.Docs.Shared
                    Flex=false
                   },
                      new MenuModel(){
-                   Label="Loading 加载中",
-                   Route="/loading",
-                   Flex=false
-                  },
-                     new MenuModel(){
                    Label="MessageBox 消息弹窗",
                    Route="/messagebox",
                    Flex=false

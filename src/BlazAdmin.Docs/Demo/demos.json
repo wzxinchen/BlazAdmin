@@ -235,43 +235,6 @@
     ]
   },
   {
-    "name": "loading",
-    "demos": [
-      {
-        "title": "区域加载",
-        "name": "Loading",
-        "files": [
-          "BasicLoading.razor",
-          "BasicLoadingBase.cs"
-        ]
-      },
-      {
-        "title": "自定义加载",
-        "name": "Loading",
-        "files": [
-          "CustomLoading.razor",
-          "BasicLoadingBase.cs"
-        ]
-      },
-      {
-        "title": "服务调用",
-        "name": "Loading",
-        "files": [
-          "ServiceLoading.razor",
-          "ServiceLoadingBase.cs"
-        ]
-      },
-      {
-        "title": "区域手动加载",
-        "name": "Loading",
-        "files": [
-          "ManualLoading.razor",
-          "BasicLoadingBase.cs"
-        ]
-      }
-    ]
-  },
-  {
     "name": "button",
     "demos": [
       {

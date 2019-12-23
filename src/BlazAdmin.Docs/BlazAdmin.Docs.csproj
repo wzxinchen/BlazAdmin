@@ -27,10 +27,6 @@
     <None Include="Demo\Form\AlignForm.razor" />
     <None Include="Demo\Form\BasicForm.razor" />
     <None Include="Demo\Form\InlineForm.razor" />
-    <None Include="Demo\Loading\BasicLoading.razor" />
-    <None Include="Demo\Loading\CustomLoading.razor" />
-    <None Include="Demo\Loading\ManualLoading.razor" />
-    <None Include="Demo\Loading\ServiceLoading.razor" />
     <None Include="Demo\Menu\VerticalMenu.razor" />
     <None Include="Demo\MessageBox\BasicMessageBox.razor" />
     <None Include="Demo\MessageBox\ConfirmMessageBox.razor" />
@@ -96,12 +92,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Update="Demo\Form\InlineFormBase.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Demo\Loading\BasicLoadingBase.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Demo\Loading\ServiceLoadingBase.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Update="Demo\MessageBox\BasicMessageBoxBase.cs">
@@ -224,18 +214,6 @@
     <Content Update="Demo\LoadingButton.razor">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Update="Demo\Loading\BasicLoading.razor">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Demo\Loading\CustomLoading.razor">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Demo\Loading\ManualLoading.razor">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Demo\Loading\ServiceLoading.razor">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Update="Demo\Menu\VerticalMenu.razor">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -287,6 +265,10 @@
     <Content Update="Demo\TextSwitch.razor">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Demo\Loading\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties demo_4demos_1json__JsonSchema="http://json.schemastore.org/asmdef" /></VisualStudio></ProjectExtensions>
