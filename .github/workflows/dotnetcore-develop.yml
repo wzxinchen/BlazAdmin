@@ -1,9 +1,6 @@
-name: Publish Develop
+name: Develop
 
-on: 
-  pull_request:
-    branches: 
-      - develop
+on: [push]
 
 jobs:
   build:
@@ -17,7 +14,7 @@ jobs:
       with:
         dotnet-version: 3.1.100
     - name: Build with dotnet
-      run: dotnet build --configuration Release
+      run: dotnet build src/BlazAdmin/BlazAdmin.csproj --configuration Release
     - name: Build Number Generator
       uses: einaregilsson/build-number@v2
       with: 
@@ -25,4 +22,4 @@ jobs:
     - name: pack nuget
       run: dotnet pack src/BlazAdmin/BlazAdmin.csproj /p:PackageVersion=0.0.2.${BUILD_NUMBER}-develop -c Release --no-build --no-restore
     - name: push nuget
-      run: dotnet nuget push src/BlazAdmin/bin/Release/BlazAdmin.0.0.2.${BUILD_NUMBER}-develop.nupkg -s https://www.myget.org/F/wzxinchen-blazor/api/v2/package -k 2564e20d-4cd4-482e-ba4b-daf05e2effa8
+      run: dotnet nuget push src/BlazAdmin/bin/Release/BlazAdmin.0.0.2.${BUILD_NUMBER}-develop.nupkg -s https://www.myget.org/F/wzxinchen-blazor/api/v2/package  -k 2564e20d-4cd4-482e-ba4b-daf05e2effa8
