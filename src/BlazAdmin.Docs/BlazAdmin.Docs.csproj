@@ -48,13 +48,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BlazAdmin.ServerRender" Version="0.0.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BlazAdmin.Docs.ServerRender\BlazAdmin.Docs.ServerRender.csproj" />
   </ItemGroup>
 
   <ItemGroup>
