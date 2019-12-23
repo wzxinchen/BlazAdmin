@@ -27,10 +27,6 @@
     <None Include="Demo\Form\AlignForm.razor" />
     <None Include="Demo\Form\BasicForm.razor" />
     <None Include="Demo\Form\InlineForm.razor" />
-    <None Include="Demo\Loading\BasicLoading.razor" />
-    <None Include="Demo\Loading\CustomLoading.razor" />
-    <None Include="Demo\Loading\ManualLoading.razor" />
-    <None Include="Demo\Loading\ServiceLoading.razor" />
     <None Include="Demo\Menu\VerticalMenu.razor" />
     <None Include="Demo\MessageBox\BasicMessageBox.razor" />
     <None Include="Demo\MessageBox\ConfirmMessageBox.razor" />
@@ -52,7 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BlazAdmin.ServerRender" Version="0.0.1.3" />
+    <PackageReference Include="BlazAdmin.ServerRender" Version="0.0.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
@@ -96,12 +92,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Update="Demo\Form\InlineFormBase.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Demo\Loading\BasicLoadingBase.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Demo\Loading\ServiceLoadingBase.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Update="Demo\MessageBox\BasicMessageBoxBase.cs">
@@ -222,18 +212,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="Demo\LoadingButton.razor">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Demo\Loading\BasicLoading.razor">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Demo\Loading\CustomLoading.razor">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Demo\Loading\ManualLoading.razor">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Demo\Loading\ServiceLoading.razor">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="Demo\Menu\VerticalMenu.razor">
