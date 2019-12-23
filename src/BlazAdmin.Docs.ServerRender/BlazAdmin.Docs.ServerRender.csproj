@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="BlazAdmin.ServerRender" Version="0.0.1.4" />
+  </ItemGroup>
+
 </Project>
