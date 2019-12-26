@@ -6,25 +6,30 @@
             <Authorized>
                 <BLayout WestWidth="@NavigationWidth">
                     <West>
-                        <BCard Title="@NavigationTitle" Style="background-color:#20222A;" Shadow="@ShadowShowType.Never">
-                            <BMenu Mode="@MenuMode.Vertical" @bind-ActiveItem="@CurrentMenu" DefaultActive="@defaultMenuIndex" BackgroundColor="#20222A" ActiveTextColor="#FFFFFF" TextColor="rgba(255,255,255,.7)" HoverColor="#434A50">
-                                @foreach (var menu in Menus)
-                                {
-                                    if (menu.Children != null && menu.Children.Any())
+                        <BCard Style="background-color:#20222A;" Shadow="@ShadowShowType.Never">
+                            <Header>
+                                @NavigationTitle
+                            </Header>
+                            <Body>
+                                <BMenu Mode="@MenuMode.Vertical" @bind-ActiveItem="@CurrentMenu" DefaultActive="@defaultMenuIndex" BackgroundColor="#20222A" ActiveTextColor="#FFFFFF" TextColor="rgba(255,255,255,.7)" HoverColor="#434A50">
+                                    @foreach (var menu in Menus)
                                     {
-                                        <BSubMenu Label="@menu.Label" Icon="@menu.Icon">
-                                            @foreach (var children in menu.Children)
-                                            {
-                                                <BMenuItem Route="@children.Route" Icon="@children.Icon" Index="@children.Name" Model="@children">@children.Label</BMenuItem>
-                                            }
-                                        </BSubMenu>
+                                        if (menu.Children != null && menu.Children.Any())
+                                        {
+                                            <BSubMenu Label="@menu.Label" Icon="@menu.Icon">
+                                                @foreach (var children in menu.Children)
+                                                {
+                                                    <BMenuItem Route="@children.Route" Icon="@children.Icon" Index="@children.Name" Model="@children">@children.Label</BMenuItem>
+                                                }
+                                            </BSubMenu>
+                                        }
+                                        else
+                                        {
+                                            <BMenuItem Route="@menu.Route" Icon="@menu.Icon" Index="@menu.Name" Model="@menu">@menu.Label</BMenuItem>
+                                        }
                                     }
-                                    else
-                                    {
-                                        <BMenuItem Route="@menu.Route" Icon="@menu.Icon" Index="@menu.Name" Model="@menu">@menu.Label</BMenuItem>
-                                    }
-                                }
-                            </BMenu>
+                                </BMenu>
+                            </Body>
                         </BCard>
                     </West>
                     <Center>
