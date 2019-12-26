@@ -8,7 +8,7 @@ namespace BlazAdmin.Docs.Shared
         protected LoginInfoModel DefaultUser { get; set; } = new LoginInfoModel()
         {
             Username = "admin",
-            Password = "admin"
+            Password = "admin888"
         };
         protected List<MenuModel> Menus { get; set; } = new List<MenuModel>();
 
