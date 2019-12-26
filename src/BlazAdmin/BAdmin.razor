@@ -6,7 +6,7 @@
             <Authorized>
                 <BLayout WestWidth="@NavigationWidth">
                     <West>
-                        <BSimpleCard Title="@NavigationTitle" Style="background-color:#20222A;" Shadow="@ShadowShowType.Never">
+                        <BCard Title="@NavigationTitle" Style="background-color:#20222A;" Shadow="@ShadowShowType.Never">
                             <BMenu Mode="@MenuMode.Vertical" @bind-ActiveItem="@CurrentMenu" DefaultActive="@defaultMenuIndex" BackgroundColor="#20222A" ActiveTextColor="#FFFFFF" TextColor="rgba(255,255,255,.7)" HoverColor="#434A50">
                                 @foreach (var menu in Menus)
                                 {
@@ -25,7 +25,7 @@
                                     }
                                 }
                             </BMenu>
-                        </BSimpleCard>
+                        </BCard>
                     </West>
                     <Center>
                         <BForm @ref="form"></BForm>
