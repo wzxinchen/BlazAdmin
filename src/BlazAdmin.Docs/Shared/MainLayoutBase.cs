@@ -8,7 +8,7 @@ namespace BlazAdmin.Docs.Shared
         protected LoginInfoModel DefaultUser { get; set; } = new LoginInfoModel()
         {
             Username = "admin",
-            Password = "admin"
+            Password = "admin888"
         };
         protected List<MenuModel> Menus { get; set; } = new List<MenuModel>();
 
@@ -109,11 +109,6 @@ namespace BlazAdmin.Docs.Shared
                   new MenuModel(){
                    Label="Message 消息",
                    Route="/message",
-                   Flex=false
-                  },
-                     new MenuModel(){
-                   Label="Loading 加载中",
-                   Route="/loading",
                    Flex=false
                   },
                      new MenuModel(){

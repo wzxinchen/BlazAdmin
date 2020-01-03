@@ -1,9 +1,9 @@
-name: .NET Core
+name: Develop
 
 on: 
   push:
     branches: 
-      - master
+      - develop
 
 jobs:
   build:
@@ -16,6 +16,8 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.100
+    - name: Restore with dotnet
+      run: dotnet restore src/BlazAdmin/BlazAdmin.csproj --configfile $GITHUB_WORKSPACE/nuget.config
     - name: Build with dotnet
       run: dotnet build src/BlazAdmin/BlazAdmin.csproj --configuration Release
     - name: Build Number Generator
@@ -23,6 +25,6 @@ jobs:
       with: 
         token: ${{secrets.github_token}}
     - name: pack nuget
-      run: dotnet pack src/BlazAdmin/BlazAdmin.csproj /p:PackageVersion=0.0.2.1 -c Release --no-build --no-restore
+      run: dotnet pack src/BlazAdmin/BlazAdmin.csproj /p:PackageVersion=0.0.2.${BUILD_NUMBER}-develop -c Release --no-build --no-restore
     - name: push nuget
-      run: dotnet nuget push src/BlazAdmin/bin/Release/BlazAdmin.0.0.2.1.nupkg -s https://api.nuget.org/v3/index.json  -k oy2d44fv6wifoxdcwgkas7iwi37eahuexbsilepbewbnnu
+      run: dotnet nuget push src/BlazAdmin/bin/Release/BlazAdmin.0.0.2.${BUILD_NUMBER}-develop.nupkg -s https://www.myget.org/F/wzxinchen-blazor/api/v2/package  -k 2564e20d-4cd4-482e-ba4b-daf05e2effa8
