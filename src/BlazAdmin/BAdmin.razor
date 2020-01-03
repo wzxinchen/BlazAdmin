@@ -37,7 +37,7 @@
                         <div class="navbar">
                             <div class="tools">
                                 <BBreadcrumb @ref="breadcrumb">
-                                    <BBreadcrumbItem>首页</BBreadcrumbItem>
+                                    <BBreadcrumbItem>@BreadcrumbTitle</BBreadcrumbItem>
                                     @if (CurrentMenu != null)
                                     {
                                         <BBreadcrumbItem>@(((MenuModel)CurrentMenu.Model).Title)</BBreadcrumbItem>

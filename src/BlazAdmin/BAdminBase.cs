@@ -45,14 +45,21 @@ namespace BlazAdmin
         public RenderFragment CreatePage { get; set; }
         [Parameter]
         public RenderFragment ModifyPasswordPage { get; set; }
+
         [Parameter]
         public float NavigationWidth { get; set; } = 250;
+
         /// <summary>
         /// 导航菜单栏标题
         /// </summary>
         [Parameter]
         public string NavigationTitle { get; set; } = "BlazAdmin 后台模板";
 
+        /// <summary>
+        /// 面包屑标题
+        /// </summary>
+        [Parameter]
+        public string BreadcrumbTitle { get; set; } = "首页";
         [Parameter]
         public List<MenuModel> Menus { get; set; }
 

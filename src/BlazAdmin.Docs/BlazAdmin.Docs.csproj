@@ -270,10 +270,6 @@
     <Folder Include="Demo\Loading\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\BlazAdmin.ServerRender\src\BlazAdmin.ServerRender\BlazAdmin.ServerRender.csproj" />
-  </ItemGroup>
-
   <ProjectExtensions><VisualStudio><UserProperties demo_4demos_1json__JsonSchema="http://json.schemastore.org/asmdef" /></VisualStudio></ProjectExtensions>
 
 </Project>
