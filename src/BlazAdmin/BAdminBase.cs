@@ -209,10 +209,6 @@ namespace BlazAdmin
             var type = routeService.GetComponent(path);
             if (type == null)
             {
-                if (path != "/")
-                {
-                    MessageService.Show($"路由为 {path} 的页面未找到", MessageType.Warning);
-                }
                 return;
             }
             ActiveTabName = path;
