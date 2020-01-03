@@ -15,6 +15,11 @@ https://www.cnblogs.com/wzxinchen/p/12057171.html
 
 ## 关注与讨论
 
+## 更新日志
+
+### 版本 0.0.2.1，2020.01.03 发布
+https://github.com/wzxinchen/BlazAdmin/issues?q=is%3Aissue+is%3Aclosed+milestone%3Av20200105
+
 加入QQ群：74522853
 
 [5]: http://static.zybuluo.com/wzxinchen/gdblemd4hqpdzcq30mrmfiln/image.png
