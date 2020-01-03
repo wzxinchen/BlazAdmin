@@ -37,7 +37,7 @@ namespace BlazAdmin
         public LoginInfoModel DefaultUser { get; set; }
 
         [Parameter]
-        public bool EnablePermissionMenus { get; set; } = true;
+        public bool EnablePermissionMenus { get; set; } = false;
         protected string username;
         [Parameter]
         public RenderFragment LoginPage { get; set; }
