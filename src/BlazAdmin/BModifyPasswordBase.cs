@@ -14,6 +14,8 @@ namespace BlazAdmin
     {
         protected BForm form;
 
+        [Parameter]
+        public DialogOption Dialog { get; set; }
 
         public virtual async System.Threading.Tasks.Task ModifyAsync()
         {
@@ -27,7 +29,7 @@ namespace BlazAdmin
             var result = await UserService.ChangePasswordAsync(Username, info.OldPassword, info.NewPassword);
             if (string.IsNullOrWhiteSpace(result))
             {
-                _ = DialogService.CloseDialogAsync(this, info);
+                _ = Dialog.CloseDialogAsync(info);
                 return;
             }
             Toast(result);

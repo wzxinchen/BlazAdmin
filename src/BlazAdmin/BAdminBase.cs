@@ -40,11 +40,11 @@ namespace BlazAdmin
         public bool EnablePermissionMenus { get; set; } = false;
         protected string username;
         [Parameter]
-        public RenderFragment LoginPage { get; set; }
+        public Type LoginPage { get; set; }
         [Parameter]
-        public RenderFragment CreatePage { get; set; }
+        public Type CreatePage { get; set; }
         [Parameter]
-        public RenderFragment ModifyPasswordPage { get; set; }
+        public Type ModifyPasswordPage { get; set; }
 
         [Parameter]
         public float NavigationWidth { get; set; } = 250;
@@ -65,6 +65,13 @@ namespace BlazAdmin
 
         [Parameter]
         public RenderFragment ChildContent { get; set; }
+
+        /// <summary>
+        /// 右上角下拉框菜单
+        /// </summary>
+        [Parameter]
+        public RenderFragment PersonMenus { get; set; }
+
         [Parameter]
         public string DefaultRoute { get; set; }
 
@@ -82,16 +89,7 @@ namespace BlazAdmin
 
         internal async Task ModifyPasswordAsync()
         {
-            var modifyPasswordPage = ModifyPasswordPage;
-            if (modifyPasswordPage == null)
-            {
-                modifyPasswordPage = builder =>
-                {
-                    builder.OpenComponent<BModifyPassword>(0);
-                    builder.CloseComponent();
-                };
-            }
-            var result = await DialogService.ShowDialogAsync<ModifyPasswordModel>(modifyPasswordPage, "修改密码", 500);
+            var result = await DialogService.ShowDialogAsync<ModifyPasswordModel>((ModifyPasswordPage ?? typeof(BModifyPassword)), "修改密码", 500);
             if (result.Result == null)
             {
                 return;

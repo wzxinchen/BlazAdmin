@@ -54,6 +54,10 @@
                                         </span>
                                     </Trigger>
                                     <Items>
+                                        @if (PersonMenus != null)
+                                        {
+                                            @PersonMenus
+                                        }
                                         <BDropDownItem OnClick="ModifyPasswordAsync">修改密码</BDropDownItem>
                                         <BDropDownItem OnClick="LogoutAsync">注销登录</BDropDownItem>
                                     </Items>

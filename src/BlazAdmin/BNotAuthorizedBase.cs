@@ -10,9 +10,9 @@ namespace BlazAdmin
     {
         internal bool? requireInitilize;
         [Parameter]
-        public object LoginPage { get; set; }
+        public Type LoginPage { get; set; }
         [Parameter]
-        public object CreatePage { get; set; }
+        public Type CreatePage { get; set; }
 
         [Parameter]
         public LoginInfoModel DefaultUser { get; set; }
