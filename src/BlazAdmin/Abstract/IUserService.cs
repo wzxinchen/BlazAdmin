@@ -10,11 +10,12 @@ namespace BlazAdmin.Abstract
     public interface IUserService
     {
         Task<string> ChangePasswordAsync(string username, string oldPassword, string newPassword);
-        Task<string> CreateUserAsync(string username, string password);
+        Task<string> CreateUserAsync(string username, string email, string password);
         Task<string> CreateRoleAsync(string roleName, string id);
-        Task<List<dynamic>> GetUsersAsync();
+        Task<List<UserModel>> GetUsersAsync();
+        Task<string> UpdateUserAsync(UserModel userModel);
         Task<string> AddToRoleAsync(string username, params string[] roles);
-        Task<string> DeleteUsersAsync(params object[] users);
+        Task<string> DeleteUsersAsync(params string[] userIds);
         ValueTask<bool> IsRequireInitilizeAsync();
 
         /// <summary>
@@ -34,5 +35,13 @@ namespace BlazAdmin.Abstract
         /// <param name="password"></param>
         /// <returns></returns>
         ValueTask<string> LoginAsync(BForm form, string username, string password, string callback);
+
+        /// <summary>
+        /// 重置密码
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        ValueTask<string> ResetPasswordAsync(string id, string password);
     }
 }

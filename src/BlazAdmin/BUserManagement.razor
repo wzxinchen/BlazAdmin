@@ -1,14 +1,14 @@
 ﻿@page "/user/list"
 @inherits BUserManagementBase
 <BButtonGroup>
-    <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small">创建用户</BButton>
-    <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Small">批量删除</BButton>
+    <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" OnClick="CreateUserAsync">创建用户</BButton>
 </BButtonGroup>
-<BTable DataSource="Users">
-    <BTableColumns TRow="object">
-        <BTableTemplateColumn TRow="object" Text="操作">
-            <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Mini" OnClick="@(e=> Edit(context))">编辑</BButton>
+<BTable DataSource="Users" @ref="table" IgnoreProperties="new string[] { nameof(UserModel.Password),nameof(UserModel.Id)}">
+    <BTableColumns>
+        <BTableTemplateColumn Text="操作">
+            <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Mini" OnClick="@(e=> EditAsync(context))">编辑</BButton>
             <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Mini" OnClick="@(e=> Del(context))">删除</BButton>
+            <BButton Type="@ButtonType.Info" Size="@ButtonSize.Mini" OnClick="@(e=> Reset(context))">重置密码</BButton>
         </BTableTemplateColumn>
     </BTableColumns>
 </BTable>

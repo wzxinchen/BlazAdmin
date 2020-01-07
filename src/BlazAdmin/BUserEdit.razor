@@ -1,0 +1,21 @@
+﻿@inherits BUserEditBase
+<BForm Value="User" @ref="form">
+    <BFormItem TValue="string" IsHidden="true" Name="@nameof(UserModel.Id)">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+    <BFormItem TValue="string" Label="用户名" Name="@nameof(UserModel.Username)" IsRequired="true">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+    <BFormItem TValue="string" Label="邮箱" Name="@nameof(UserModel.Email)">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+    @if (User == null)
+    {
+        <BFormItem TValue="string" Label="密码" Name="@nameof(UserModel.Password)">
+            <BInput Type="InputType.Password" TValue="string"></BInput>
+        </BFormItem>
+    }
+    <BFormActionItem Style="text-align:center">
+        <BButton Type="ButtonType.Primary" OnClick="SubmitAsync">确定</BButton>
+    </BFormActionItem>
+</BForm>
