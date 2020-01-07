@@ -1,0 +1,13 @@
+﻿@page "/user/roles"
+@inherits BRoleManagementBase
+<BButtonGroup>
+    <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" OnClick="CreateRoleAsync">创建角色</BButton>
+</BButtonGroup>
+<BTable DataSource="Roles" @ref="table">
+    <BTableColumns>
+        <BTableTemplateColumn Text="操作">
+            <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Mini" OnClick="@(e=> EditAsync(context))">编辑</BButton>
+            <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Mini" OnClick="@(e=> Del(context))">删除</BButton>
+        </BTableTemplateColumn>
+    </BTableColumns>
+</BTable>

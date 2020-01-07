@@ -15,6 +15,7 @@ namespace BlazAdmin.Abstract
         Task<List<UserModel>> GetUsersAsync();
         Task<string> UpdateUserAsync(UserModel userModel);
         Task<string> AddToRoleAsync(string username, params string[] roles);
+        Task<List<RoleModel>> GetRolesAsync();
         Task<string> DeleteUsersAsync(params string[] userIds);
         ValueTask<bool> IsRequireInitilizeAsync();
 
@@ -35,6 +36,7 @@ namespace BlazAdmin.Abstract
         /// <param name="password"></param>
         /// <returns></returns>
         ValueTask<string> LoginAsync(BForm form, string username, string password, string callback);
+        ValueTask<string> DeleteRolesAsync(params string[] ids);
 
         /// <summary>
         /// 重置密码
