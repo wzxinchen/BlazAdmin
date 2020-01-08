@@ -15,7 +15,7 @@ namespace BlazAdmin
 
         public async Task CreateRoleAsync()
         {
-            await DialogService.ShowDialogAsync<BUserEdit>("创建角色", 400, new Dictionary<string, object>());
+            await DialogService.ShowDialogAsync<BRoleEdit>("创建角色", 400, new Dictionary<string, object>());
             await RefreshRolesAsync();
         }
 
@@ -27,11 +27,11 @@ namespace BlazAdmin
             StateHasChanged();
         }
 
-        public async Task EditAsync(object user)
+        public async Task EditAsync(object role)
         {
             var parameters = new Dictionary<string, object>();
-            parameters.Add(nameof(BUserEdit.User), user);
-            await DialogService.ShowDialogAsync<BUserEdit>("编辑角色", 400, parameters);
+            parameters.Add(nameof(BRoleEdit.Role), role);
+            await DialogService.ShowDialogAsync<BRoleEdit>("编辑角色", 400, parameters);
             await RefreshRolesAsync();
         }
 
@@ -55,9 +55,10 @@ namespace BlazAdmin
             var result = await UserService.DeleteRolesAsync(((RoleModel)role).Id);
             if (string.IsNullOrWhiteSpace(result))
             {
+                await RefreshRolesAsync();
                 return;
             }
-            await RefreshRolesAsync();
+            Toast(result);
         }
     }
 }

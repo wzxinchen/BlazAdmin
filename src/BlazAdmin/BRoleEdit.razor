@@ -1,0 +1,12 @@
+﻿@inherits BRoleEditBase
+<BForm Value="Role" @ref="form">
+    <BFormItem TValue="string" IsHidden="true" Name="@nameof(RoleModel.Id)">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+    <BFormItem TValue="string" Label="角色名" Name="@nameof(RoleModel.Name)" IsRequired="true">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+    <BFormActionItem Style="text-align:center">
+        <BButton Type="ButtonType.Primary" OnClick="SubmitAsync">确定</BButton>
+    </BFormActionItem>
+</BForm>

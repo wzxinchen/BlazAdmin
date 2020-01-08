@@ -11,9 +11,10 @@ namespace BlazAdmin.Abstract
     {
         Task<string> ChangePasswordAsync(string username, string oldPassword, string newPassword);
         Task<string> CreateUserAsync(string username, string email, string password);
-        Task<string> CreateRoleAsync(string roleName, string id);
+        Task<string> CreateRoleAsync(string roleName);
         Task<List<UserModel>> GetUsersAsync();
         Task<string> UpdateUserAsync(UserModel userModel);
+        Task<string> UpdateRoleAsync(RoleModel roleModel);
         Task<string> AddToRoleAsync(string username, params string[] roles);
         Task<List<RoleModel>> GetRolesAsync();
         Task<string> DeleteUsersAsync(params string[] userIds);

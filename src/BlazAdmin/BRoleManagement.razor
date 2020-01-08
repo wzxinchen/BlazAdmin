@@ -3,7 +3,7 @@
 <BButtonGroup>
     <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" OnClick="CreateRoleAsync">创建角色</BButton>
 </BButtonGroup>
-<BTable DataSource="Roles" @ref="table">
+<BTable DataSource="Roles" @ref="table" IgnoreProperties="new string[] { nameof(RoleModel.Id)}">
     <BTableColumns>
         <BTableTemplateColumn Text="操作">
             <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Mini" OnClick="@(e=> EditAsync(context))">编辑</BButton>

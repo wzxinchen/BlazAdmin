@@ -7,11 +7,11 @@ using System.Text;
 
 namespace BlazAdmin
 {
-    public class BUserEditBase : BAdminPageBase
+    public class BRoleEditBase : BAdminPageBase
     {
         internal BForm form;
         [Parameter]
-        public UserModel User { get; set; }
+        public RoleModel Role { get; set; }
 
         [Parameter]
         public DialogOption Dialog { get; set; }
@@ -19,7 +19,7 @@ namespace BlazAdmin
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            isCreate = User == null;
+            isCreate = Role == null;
         }
         public async System.Threading.Tasks.Task SubmitAsync()
         {
@@ -29,14 +29,14 @@ namespace BlazAdmin
             }
 
             string error;
-            User = form.GetValue<UserModel>();
+            Role = form.GetValue<RoleModel>();
             if (isCreate)
             {
-                error = await UserService.CreateUserAsync(User.Username, User.Email, User.Password);
+                error = await UserService.CreateRoleAsync(Role.Name);
             }
             else
             {
-                error = await UserService.UpdateUserAsync(User);
+                error = await UserService.UpdateRoleAsync(Role);
             }
             if (!string.IsNullOrWhiteSpace(error))
             {
