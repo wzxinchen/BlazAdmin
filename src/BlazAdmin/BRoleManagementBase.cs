@@ -1,5 +1,6 @@
 ﻿using Blazui.Component;
 using Blazui.Component.Table;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,9 +10,8 @@ namespace BlazAdmin
 {
     public class BRoleManagementBase : BAdminPageBase
     {
-        protected List<RoleModel> Roles { get; private set; } = new List<RoleModel>();
+        protected List<RoleModel> RoleModels { get; private set; } = new List<RoleModel>();
         protected BTable table;
-
 
         public async Task CreateRoleAsync()
         {
@@ -21,7 +21,7 @@ namespace BlazAdmin
 
         private async Task RefreshRolesAsync()
         {
-            Roles = await UserService.GetRolesAsync();
+            RoleModels = await UserService.GetRolesAsync();
             table.MarkAsRequireRender();
             RequireRender = true;
             StateHasChanged();

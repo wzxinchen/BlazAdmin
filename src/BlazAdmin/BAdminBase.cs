@@ -63,9 +63,6 @@ namespace BlazAdmin
         [Parameter]
         public List<MenuModel> Menus { get; set; }
 
-        [Parameter]
-        public RenderFragment ChildContent { get; set; }
-
         /// <summary>
         /// 右上角下拉框菜单
         /// </summary>
