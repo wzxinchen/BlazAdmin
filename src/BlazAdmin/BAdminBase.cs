@@ -118,6 +118,7 @@ namespace BlazAdmin
         }
         protected override async Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync();
             var path = new Uri(NavigationManager.Uri).LocalPath;
             if (path == "/" && !string.IsNullOrWhiteSpace(DefaultRoute))
             {
@@ -154,17 +155,48 @@ namespace BlazAdmin
                     Name = "rolelist",
                     Title = "角色列表"
                 });
-                permissionMenu.Children.Add(new MenuModel()
-                {
-                    Icon = "el-icon-s-grid",
-                    Label = "功能列表",
-                    Name = "featurelist",
-                    Route = "/user/features",
-                    Title = "功能列表"
-                });
                 Menus.Add(permissionMenu);
             }
+
             FindMenuName(Menus, path);
+        }
+
+        /// <summary>
+        /// 菜单是否需要隐藏
+        /// </summary>
+        /// <param name="menu"></param>
+        /// <returns></returns>
+        internal bool RequireHide(MenuModel menu)
+        {
+            var type = routeService.GetComponent(menu.Route);
+            if (type == null)
+            {
+                return false;
+            }
+            var resource = type.GetCustomAttributes(false).OfType<ResourceAttribute>().FirstOrDefault();
+            if (resource == null)
+            {
+                return false;
+            }
+            return !IsCanAccessAny(resource.Id);
+        }
+
+
+        /// <summary>
+        /// 父菜单是否需要隐藏
+        /// </summary>
+        /// <param name="menu"></param>
+        /// <returns></returns>
+        internal bool RequireHide(List<MenuModel> children)
+        {
+            foreach (var item in children)
+            {
+                if (!RequireHide(item))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void NavigationManager_LocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)

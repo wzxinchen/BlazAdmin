@@ -21,10 +21,10 @@ namespace BlazAdmin
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            CanCreate = await IsCanAccessAnyAsync(AdminResources.CreateUser.ToString());
-            CanUpdate = await IsCanAccessAnyAsync(AdminResources.UpdateUser.ToString());
-            CanDelete = await IsCanAccessAnyAsync(AdminResources.DeleteUser.ToString());
-            CanReset = await IsCanAccessAnyAsync(AdminResources.ResetPassword.ToString());
+            CanCreate = IsCanAccessAny(AdminResources.CreateUser.ToString());
+            CanUpdate = IsCanAccessAny(AdminResources.UpdateUser.ToString());
+            CanDelete = IsCanAccessAny(AdminResources.DeleteUser.ToString());
+            CanReset = IsCanAccessAny(AdminResources.ResetPassword.ToString());
         }
 
 

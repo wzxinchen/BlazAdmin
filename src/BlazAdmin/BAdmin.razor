@@ -16,16 +16,25 @@
                                     {
                                         if (menu.Children != null && menu.Children.Any())
                                         {
-                                            <BSubMenu Label="@menu.Label" Icon="@menu.Icon">
-                                                @foreach (var children in menu.Children)
-                                                {
-                                                    <BMenuItem Route="@children.Route" Icon="@children.Icon" Index="@children.Name" Model="@children">@children.Label</BMenuItem>
-                                                }
-                                            </BSubMenu>
+                                            @if (!RequireHide(menu.Children))
+                                            {
+                                                <BSubMenu Label="@menu.Label" Icon="@menu.Icon">
+                                                    @foreach (var children in menu.Children)
+                                                    {
+                                                        @if (!RequireHide(children))
+                                                        {
+                                                            <BMenuItem Route="@children.Route" Icon="@children.Icon" Index="@children.Name" Model="@children">@children.Label</BMenuItem>
+                                                        }
+                                                    }
+                                                </BSubMenu>
+                                            }
                                         }
                                         else
                                         {
-                                            <BMenuItem Route="@menu.Route" Icon="@menu.Icon" Index="@menu.Name" Model="@menu">@menu.Label</BMenuItem>
+                                            @if (!RequireHide(menu))
+                                            {
+                                                <BMenuItem Route="@menu.Route" Icon="@menu.Icon" Index="@menu.Name" Model="@menu">@menu.Label</BMenuItem>
+                                            }
                                         }
                                     }
                                 </BMenu>

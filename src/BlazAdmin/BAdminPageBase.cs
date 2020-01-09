@@ -36,13 +36,13 @@ namespace BlazAdmin
 
         protected override async Task OnInitializedAsync()
         {
-            base.OnInitialized();
+            await base.OnInitializedAsync();
             var resource = GetType().GetCustomAttributes(false)
                 .OfType<ResourceAttribute>()
                 .FirstOrDefault();
             if (resource != null)
             {
-                Roles = await UserService.GetRolesWithResourcesAsync(resource.Id);
+                Roles = UserService.GetRolesWithResources(resource.Id);
                 if (!string.IsNullOrWhiteSpace(Roles))
                 {
                     Roles += ",管理员";
@@ -63,7 +63,7 @@ namespace BlazAdmin
         /// </summary>
         /// <param name="resources"></param>
         /// <returns></returns>
-        protected async Task<bool> IsCanAccessAnyAsync(params string[] resources)
+        protected bool IsCanAccessAny(params string[] resources)
         {
             if (User == null)
             {
@@ -73,7 +73,7 @@ namespace BlazAdmin
             {
                 return true;
             }
-            var roles = await UserService.GetRolesWithResourcesAsync(resources);
+            var roles = UserService.GetRolesWithResources(resources);
             foreach (var role in roles.Split(','))
             {
                 if (User.IsInRole(role))
@@ -90,7 +90,7 @@ namespace BlazAdmin
         /// </summary>
         /// <param name="resources"></param>
         /// <returns></returns>
-        protected async Task<bool> IsCanAccessAllAsync(params string[] resources)
+        protected bool IsCanAccessAll(params string[] resources)
         {
             if (User == null)
             {
@@ -100,7 +100,7 @@ namespace BlazAdmin
             {
                 return true;
             }
-            var roles = await UserService.GetRolesWithResourcesAsync(resources);
+            var roles = UserService.GetRolesWithResources(resources);
             foreach (var role in roles.Split(','))
             {
                 if (!User.IsInRole(role))

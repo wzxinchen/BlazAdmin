@@ -19,7 +19,7 @@ namespace BlazAdmin.Abstract
         List<RoleModel> GetRoles();
         Task<string> DeleteUsersAsync(params string[] userIds);
         ValueTask<bool> IsRequireInitilizeAsync();
-        Task<string> GetRolesWithResourcesAsync(params string[] resources);
+        string GetRolesWithResources(params string[] resources);
 
         /// <summary>
         /// 仅检查密码

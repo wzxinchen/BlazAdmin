@@ -20,9 +20,9 @@ namespace BlazAdmin
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            CanCreate = await IsCanAccessAnyAsync(AdminResources.CreateRole.ToString());
-            CanUpdate = await IsCanAccessAnyAsync(AdminResources.UpdateRole.ToString());
-            CanDelete = await IsCanAccessAnyAsync(AdminResources.DeleteRole.ToString());
+            CanCreate = IsCanAccessAny(AdminResources.CreateRole.ToString());
+            CanUpdate = IsCanAccessAny(AdminResources.UpdateRole.ToString());
+            CanDelete = IsCanAccessAny(AdminResources.DeleteRole.ToString());
         }
 
         public async Task CreateRoleAsync()
