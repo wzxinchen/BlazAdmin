@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,10 @@ namespace BlazAdmin
 {
     public class BAdminPageBase : BComponentBase
     {
+        /// <summary>
+        /// 是否超级管理员
+        /// </summary>
+        protected bool IsAdmin { get; set; }
         [Inject]
         public IUserService UserService { get; set; }
 
@@ -21,6 +26,10 @@ namespace BlazAdmin
         /// </summary>
         protected string Roles { get; private set; }
 
+        /// <summary>
+        /// 当前用户
+        /// </summary>
+        public ClaimsPrincipal User { get; private set; }
         public string Username { get; private set; }
         [Inject]
         public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
@@ -28,22 +37,79 @@ namespace BlazAdmin
         protected override async Task OnInitializedAsync()
         {
             base.OnInitialized();
-            var routes = GetType().GetCustomAttributes(false)
-                .OfType<RouteAttribute>()
-                .Select(x => x.Template)
-                .ToArray();
-            Roles = await UserService.GetRolesAsync(routes);
-            if (!string.IsNullOrWhiteSpace(Roles))
+            var resource = GetType().GetCustomAttributes(false)
+                .OfType<ResourceAttribute>()
+                .FirstOrDefault();
+            if (resource != null)
             {
-                Roles += ",管理员";
-            }
-            else
-            {
-                Roles = "管理员";
+                Roles = await UserService.GetRolesWithResourcesAsync(resource.Id);
+                if (!string.IsNullOrWhiteSpace(Roles))
+                {
+                    Roles += ",管理员";
+                }
+                else
+                {
+                    Roles = "管理员";
+                }
             }
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var user = authState?.User;
-            Username = user?.Identity?.Name;
+            User = authState?.User;
+            IsAdmin = User.IsInRole("管理员");
+            Username = User?.Identity?.Name;
+        }
+
+        /// <summary>
+        /// 是否可以访问指定资源之一
+        /// </summary>
+        /// <param name="resources"></param>
+        /// <returns></returns>
+        protected async Task<bool> IsCanAccessAnyAsync(params string[] resources)
+        {
+            if (User == null)
+            {
+                return false;
+            }
+            if (IsAdmin)
+            {
+                return true;
+            }
+            var roles = await UserService.GetRolesWithResourcesAsync(resources);
+            foreach (var role in roles.Split(','))
+            {
+                if (User.IsInRole(role))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 是否可以访问指定资源
+        /// </summary>
+        /// <param name="resources"></param>
+        /// <returns></returns>
+        protected async Task<bool> IsCanAccessAllAsync(params string[] resources)
+        {
+            if (User == null)
+            {
+                return false;
+            }
+            if (IsAdmin)
+            {
+                return true;
+            }
+            var roles = await UserService.GetRolesWithResourcesAsync(resources);
+            foreach (var role in roles.Split(','))
+            {
+                if (!User.IsInRole(role))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -9,6 +9,10 @@
     <BFormItem TValue="string" Label="邮箱" Name="@nameof(UserModel.Email)">
         <BInput TValue="string"></BInput>
     </BFormItem>
+    <BFormItem TValue="List<string>" Label="角色权限" Name="@nameof(UserModel.Roles)">
+        <BTransfer List1="RoleItems" LeftTitle="所有角色" RightTitle="所属角色">
+        </BTransfer>
+    </BFormItem>
     @if (User == null)
     {
         <BFormItem TValue="string" Label="密码" Name="@nameof(UserModel.Password)">

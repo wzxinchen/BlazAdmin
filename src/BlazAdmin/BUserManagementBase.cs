@@ -11,17 +11,35 @@ namespace BlazAdmin
     public class BUserManagementBase : BAdminPageBase
     {
         protected List<UserModel> Users { get; private set; } = new List<UserModel>();
+        internal bool CanCreate { get; private set; }
+        internal bool CanUpdate { get; private set; }
+        internal bool CanDelete { get; private set; }
+        internal bool CanReset { get; private set; }
+
         protected BTable table;
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+            CanCreate = await IsCanAccessAnyAsync(AdminResources.CreateUser.ToString());
+            CanUpdate = await IsCanAccessAnyAsync(AdminResources.UpdateUser.ToString());
+            CanDelete = await IsCanAccessAnyAsync(AdminResources.DeleteUser.ToString());
+            CanReset = await IsCanAccessAnyAsync(AdminResources.ResetPassword.ToString());
+        }
 
 
         public async Task CreateUserAsync()
         {
-            await DialogService.ShowDialogAsync<BUserEdit>("创建用户", 400, new Dictionary<string, object>());
+            await DialogService.ShowDialogAsync<BUserEdit>("创建用户", 800, new Dictionary<string, object>());
             await RefreshUsersAsync();
         }
 
         private async Task RefreshUsersAsync()
         {
+            if (table == null)
+            {
+                return;
+            }
             Users = await UserService.GetUsersAsync();
             table.MarkAsRequireRender();
             RequireRender = true;
@@ -32,7 +50,7 @@ namespace BlazAdmin
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add(nameof(BUserEdit.User), user);
-            await DialogService.ShowDialogAsync<BUserEdit>("编辑用户", 400, parameters);
+            await DialogService.ShowDialogAsync<BUserEdit>("编辑用户", 800, parameters);
             await RefreshUsersAsync();
         }
 
@@ -43,10 +61,7 @@ namespace BlazAdmin
             {
                 return;
             }
-            Users = await UserService.GetUsersAsync();
-            table.MarkAsRequireRender();
-            RequireRender = true;
-            StateHasChanged();
+            await RefreshUsersAsync();
         }
 
         public async Task Del(object user)

@@ -11,5 +11,7 @@ namespace BlazAdmin
 
         [TableColumn(Text = "名称")]
         public string Name { get; set; }
+
+        public List<string> Resources { get; set; }
     }
 }

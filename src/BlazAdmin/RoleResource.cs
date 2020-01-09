@@ -7,6 +7,6 @@ namespace BlazAdmin
     public class RoleResource
     {
         public string RoleId { get; set; }
-        public int ResourceId { get; set; }
+        public string ResourceId { get; set; }
     }
 }

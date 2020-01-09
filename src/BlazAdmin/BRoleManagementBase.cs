@@ -11,27 +11,44 @@ namespace BlazAdmin
     public class BRoleManagementBase : BAdminPageBase
     {
         protected List<RoleModel> RoleModels { get; private set; } = new List<RoleModel>();
+        internal bool CanCreate { get; private set; }
+        internal bool CanUpdate { get; private set; }
+        internal bool CanDelete { get; private set; }
+
         protected BTable table;
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+            CanCreate = await IsCanAccessAnyAsync(AdminResources.CreateRole.ToString());
+            CanUpdate = await IsCanAccessAnyAsync(AdminResources.UpdateRole.ToString());
+            CanDelete = await IsCanAccessAnyAsync(AdminResources.DeleteRole.ToString());
+        }
 
         public async Task CreateRoleAsync()
         {
-            await DialogService.ShowDialogAsync<BRoleEdit>("创建角色", 400, new Dictionary<string, object>());
+            await DialogService.ShowDialogAsync<BRoleEdit>("创建角色", 800, new Dictionary<string, object>());
             await RefreshRolesAsync();
         }
 
-        private async Task RefreshRolesAsync()
+        private Task RefreshRolesAsync()
         {
-            RoleModels = await UserService.GetRolesAsync();
+            if (table == null)
+            {
+                return Task.CompletedTask;
+            }
+            RoleModels = UserService.GetRoles();
             table.MarkAsRequireRender();
             RequireRender = true;
             StateHasChanged();
+            return Task.CompletedTask;
         }
 
         public async Task EditAsync(object role)
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add(nameof(BRoleEdit.Role), role);
-            await DialogService.ShowDialogAsync<BRoleEdit>("编辑角色", 400, parameters);
+            await DialogService.ShowDialogAsync<BRoleEdit>("编辑角色", 800, parameters);
             await RefreshRolesAsync();
         }
 

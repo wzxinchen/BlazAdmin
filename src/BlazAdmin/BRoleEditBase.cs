@@ -3,12 +3,17 @@ using Blazui.Component.Form;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BlazAdmin
 {
     public class BRoleEditBase : BAdminPageBase
     {
+        [Inject]
+        private ResourceAccessor ResourceAccessor { get; set; }
+
+        internal List<TransferItem> Resources { get; set; }
         internal BForm form;
         [Parameter]
         public RoleModel Role { get; set; }
@@ -20,6 +25,11 @@ namespace BlazAdmin
         {
             base.OnInitialized();
             isCreate = Role == null;
+            Resources = ResourceAccessor.Resources.Select(x => new TransferItem()
+            {
+                Id = x.Key,
+                Label = x.Value
+            }).ToList();
         }
         public async System.Threading.Tasks.Task SubmitAsync()
         {
@@ -32,7 +42,7 @@ namespace BlazAdmin
             Role = form.GetValue<RoleModel>();
             if (isCreate)
             {
-                error = await UserService.CreateRoleAsync(Role.Name);
+                error = await UserService.CreateRoleAsync(Role);
             }
             else
             {

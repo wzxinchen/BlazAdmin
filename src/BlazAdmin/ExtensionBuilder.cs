@@ -17,6 +17,7 @@ namespace BlazAdmin
         public static IServiceCollection AddBlazAdminCore<TUserService>(this IServiceCollection services)
             where TUserService : class, IUserService
         {
+            services.AddSingleton<ResourceAccessor>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddHttpClient();

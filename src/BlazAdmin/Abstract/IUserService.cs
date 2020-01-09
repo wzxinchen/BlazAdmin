@@ -11,15 +11,15 @@ namespace BlazAdmin.Abstract
     {
         Task<string> ChangePasswordAsync(string username, string oldPassword, string newPassword);
         Task<string> CreateUserAsync(string username, string email, string password);
-        Task<string> CreateRoleAsync(string roleName);
+        Task<string> CreateRoleAsync(RoleModel role);
         Task<List<UserModel>> GetUsersAsync();
         Task<string> UpdateUserAsync(UserModel userModel);
         Task<string> UpdateRoleAsync(RoleModel roleModel);
         Task<string> AddToRoleAsync(string username, params string[] roles);
-        Task<List<RoleModel>> GetRolesAsync();
+        List<RoleModel> GetRoles();
         Task<string> DeleteUsersAsync(params string[] userIds);
         ValueTask<bool> IsRequireInitilizeAsync();
-        Task<string> GetRolesAsync(params string[] resources);
+        Task<string> GetRolesWithResourcesAsync(params string[] resources);
 
         /// <summary>
         /// 仅检查密码
