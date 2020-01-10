@@ -13,7 +13,7 @@ namespace BlazAdmin
     {
         internal BForm form;
         [Parameter]
-        public UserModel User { get; set; }
+        public UserModel EditingUser { get; set; }
 
         internal List<TransferItem> RoleItems;
         [Parameter]
@@ -43,14 +43,14 @@ namespace BlazAdmin
             }
 
             string error;
-            User = form.GetValue<UserModel>();
+            EditingUser = form.GetValue<UserModel>();
             if (isCreate)
             {
-                error = await UserService.CreateUserAsync(User.Username, User.Email, User.Password);
+                error = await UserService.CreateUserAsync(EditingUser.Username, EditingUser.Email, EditingUser.Password);
             }
             else
             {
-                error = await UserService.UpdateUserAsync(User);
+                error = await UserService.UpdateUserAsync(EditingUser);
             }
             if (!string.IsNullOrWhiteSpace(error))
             {

@@ -49,7 +49,7 @@ namespace BlazAdmin
         public async Task EditAsync(object user)
         {
             var parameters = new Dictionary<string, object>();
-            parameters.Add(nameof(BUserEdit.User), user);
+            parameters.Add(nameof(BUserEdit.EditingUser), user);
             await DialogService.ShowDialogAsync<BUserEdit>("编辑用户", 800, parameters);
             await RefreshUsersAsync();
         }
