@@ -1,5 +1,5 @@
 ﻿using Blazui.Component;
-using Blazui.Component.Form;
+using Blazui.Component;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -13,6 +13,14 @@ namespace BlazAdmin
     public class BModifyPasswordBase : BAdminPageBase
     {
         protected BForm form;
+
+        protected bool CanModify { get; private set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+            CanModify = IsCanAccessAny(AdminResources.ModifyPassword.ToString());
+        }
 
         [Parameter]
         public DialogOption Dialog { get; set; }

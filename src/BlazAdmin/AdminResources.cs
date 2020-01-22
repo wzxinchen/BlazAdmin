@@ -27,6 +27,9 @@ namespace BlazAdmin
         CreateUser,
 
         [Description("重置密码")]
-        ResetPassword
+        ResetPassword,
+
+        [Description("修改密码")]
+        ModifyPassword
     }
 }

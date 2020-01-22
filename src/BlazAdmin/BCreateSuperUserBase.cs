@@ -1,6 +1,6 @@
 ﻿using BlazAdmin;
 using Blazui.Component;
-using Blazui.Component.Form;
+using Blazui.Component;
 using Blazui.Component.Input;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;

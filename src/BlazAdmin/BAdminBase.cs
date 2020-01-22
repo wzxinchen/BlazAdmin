@@ -2,7 +2,7 @@
 using Blazui.Component;
 using Blazui.Component.Container;
 using Blazui.Component.EventArgs;
-using Blazui.Component.Form;
+using Blazui.Component;
 using Blazui.Component.NavMenu;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;

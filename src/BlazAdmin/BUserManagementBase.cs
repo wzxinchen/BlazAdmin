@@ -4,7 +4,7 @@ using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using Blazui.Component;
-using Blazui.Component.Table;
+using Blazui.Component;
 
 namespace BlazAdmin
 {
