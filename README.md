@@ -1,5 +1,8 @@
 # BlazAdmin
 
+## 迁移
+此仓库迁移至：https://github.com/wzxinchen/Blazui/tree/master/src/Admin ，并且不再更新
+
 ## 介绍
 基于Blazui （[https://github.com/wzxinchen/Blazui](https://github.com/wzxinchen/Blazui)） 的后台管理模板，无JS，无TS，非 Silverlight，非 WebForm，开箱即用。 
 
